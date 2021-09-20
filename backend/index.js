@@ -5,11 +5,20 @@ const sqlite3 = require("sqlite3")
 const bcrypt = require('bcrypt');
 const passport = require("passport");
 const LocalStrategy =  require("passport-local");
+var session = require("express-session")
+
+app.use(session({
+    secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
+  }));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(passport.initialize());
+app.use(passport.session())
 
 var db = new sqlite3.Database('./test.db')
 
@@ -40,6 +49,17 @@ passport.use(new LocalStrategy(
         });
     }
 ));
+
+app.get('/test', (req,res) => {
+    if (req.isAuthenticated()) {
+        console.log(req.user)
+        console.log(req.sessionID)
+    }else{
+        console.log("Cookie in invalid" )
+    }
+    res.send("hi")
+})
+
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
@@ -64,18 +84,22 @@ app.post('/register', (req,res) =>{
         }else{          // user doesn't exist so we add to database
             bcrypt.hash(password, 10, function(err, hash){
                 if(err){
-                    res.send(err)
-                    return err;
+                    return res.send(err)
                 }
+
                 console.log("Created hash: ",hash)
                 const sqlQuery = `INSERT INTO userLogin(name, username, password) VALUES("${name}", "${username}", "${hash}");`
                 db.run(sqlQuery)
-                res.send("Successfully added")
-                return hash
+
+                const user = { "username": username, "password":hash, "name": name}
+
+                req.login(user, (err) => {
+                    if(err){ return res.send(err)}
+                    else{ return res.send(req.user)}
+                });
             });
         }
     });
-
 });
 
 app.listen(5000, () => {
