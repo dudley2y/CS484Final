@@ -52,12 +52,10 @@ passport.use(new LocalStrategy(
 
 app.get('/test', (req,res) => {
     if (req.isAuthenticated()) {
-        console.log(req.user)
-        console.log(req.sessionID)
+        res.send(req.user)
     }else{
-        console.log("Cookie in invalid" )
+        res.send("Cookie in invalid" )
     }
-    res.send("hi")
 })
 
 app.post('/login',

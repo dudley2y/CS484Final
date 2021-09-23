@@ -1,21 +1,38 @@
-import React from 'react';
-import { Container, Grid, TextField, Button } from '@material-ui/core';
+import React, {useState} from 'react';
+import { Container, Typography } from '@material-ui/core';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import Loginform  from './Loginform';
+import Signupform from './Signupform';
 
 const Login = () => {
 
+    const [alignment, setAlignment] = useState('Log in');
+
+    const handleChange = (event, newAlignment) => {
+        setAlignment(newAlignment) ;
+    }
+
+    const renderForm = () => {
+        if(alignment === "Log in"){
+            return(<Loginform/>)
+        }
+        else{
+            return(<Signupform/>)
+        }
+    }
+
     return(
         <Container maxWidth = "xs">
-            <form>
-                <Grid container spacing = {2}>
-                    <TextField label = "Username" required/>
-                    <TextField label = "Password" required/>
-                    <Button variant="contained" color="inherit">Primary </Button>
-                </Grid>
-            </form>
-            
+            <ToggleButtonGroup color = "primary" value = {alignment} exclusive >
+                <ToggleButton onClick={ (event) => handleChange(event, "Log in") } value="Log in">Login</ToggleButton>
+                <ToggleButton onClick={ (event) => handleChange(event, "Sign up") } value="Sign up">Signup</ToggleButton>  
+            </ToggleButtonGroup>
+
+            {renderForm()}
+
+
         </Container>
     )
 
 }
-
 export default Login;
