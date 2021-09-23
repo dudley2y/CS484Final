@@ -9,6 +9,8 @@ const Signupform = () => {
     const [password, setPassword] = useState("")
     const [retry, setRetry] = useState("")
 
+    const [response, setReponse] = useState("No response yet")
+
 
     const signUpAction = (event) => {
         if(firstName && lastName && username && password && retry && password === retry){
@@ -16,8 +18,9 @@ const Signupform = () => {
             axios.post("http://localhost:5000/register", {'name':firstName , 'username': username, 'password': password
             }).then( res => {
                 console.log(res)
+                setReponse(res.data)
             }).catch(err => {
-                console.log(err)
+                setReponse(err)
             })
         }else{
             console.log("not valid")
@@ -48,6 +51,7 @@ const Signupform = () => {
                 </div>
                 <button className="ui button" type="submit">Submit</button>
             </form>
+            <h1>{response}</h1>
         </div>
     )
 }

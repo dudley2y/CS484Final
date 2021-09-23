@@ -60,16 +60,15 @@ app.get('/test', (req,res) => {
     }
 })
 
-app.post('/login',
+app.post('/login', cors(),
   passport.authenticate('local'),
   function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.send(req.user);
+    res.send("Logged in")
   });
 
 app.post('/register', cors(), (req,res) =>{
-    console.log(req)
     const name = req.body.name;
     const username = req.body.username;
     const password = req.body.password;
@@ -81,11 +80,13 @@ app.post('/register', cors(), (req,res) =>{
 
     db.get(sqlSearch, [username], (err, row) => {
         if(row!=null){   // user already exists
+            console.log("user already exists")
             res.send("user already exists") 
         }else{          // user doesn't exist so we add to database
             bcrypt.hash(password, 10, function(err, hash){
                 if(err){
-                    return res.send(err)
+                    console.log(err)
+                    return res.sendStatus(500)
                 }
 
                 console.log("Created hash: ",hash)
@@ -96,7 +97,7 @@ app.post('/register', cors(), (req,res) =>{
 
                 req.login(user, (err) => {
                     if(err){ return res.send(err)}
-                    else{ return res.send(req.user)}
+                    else{ return res.send("Success")}
                 });
             });
         }
