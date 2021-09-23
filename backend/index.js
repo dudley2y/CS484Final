@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const passport = require("passport");
 const LocalStrategy =  require("passport-local");
 var session = require("express-session")
+const cors = require('cors')
 
 app.use(session({
     secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',
@@ -14,6 +15,7 @@ app.use(session({
     cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
   }));
 
+app.use(cors())
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -66,7 +68,8 @@ app.post('/login',
     res.send(req.user);
   });
 
-app.post('/register', (req,res) =>{
+app.post('/register', cors(), (req,res) =>{
+    console.log(req)
     const name = req.body.name;
     const username = req.body.username;
     const password = req.body.password;

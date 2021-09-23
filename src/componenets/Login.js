@@ -1,18 +1,17 @@
 import React, {useState} from 'react';
-import { Container, Typography } from '@material-ui/core';
-import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import Loginform  from './Loginform';
 import Signupform from './Signupform';
 
 const Login = () => {
 
-    const [alignment, setAlignment] = useState('Log in');
+    const [alignment, setAlignment] = useState('Sign up');
 
     const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment) ;
+        setAlignment(newAlignment);
     }
 
     const renderForm = () => {
+        console.log(alignment)
         if(alignment === "Log in"){
             return(<Loginform/>)
         }
@@ -22,16 +21,14 @@ const Login = () => {
     }
 
     return(
-        <Container maxWidth = "xs">
-            <ToggleButtonGroup color = "primary" value = {alignment} exclusive >
-                <ToggleButton onClick={ (event) => handleChange(event, "Log in") } value="Log in">Login</ToggleButton>
-                <ToggleButton onClick={ (event) => handleChange(event, "Sign up") } value="Sign up">Signup</ToggleButton>  
-            </ToggleButtonGroup>
-
+        <div>
+            <div className = "ui buttons">
+                <button className = "ui button" onClick={ (event) => handleChange(event, "Sign up") } >Sign up</button>
+                <div className = "or"></div>
+                <button className = "ui button" onClick={ (event) => handleChange(event, "Log in") }>Login</button>
+            </div>
             {renderForm()}
-
-
-        </Container>
+        </div>
     )
 
 }

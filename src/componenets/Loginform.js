@@ -1,11 +1,10 @@
-import { Container } from '@material-ui/core';
-import React, {useState} from 'react';
+import React from 'react';
 
 const Loginform = () => {
     return(
-        <Container>
+        <div>
             <h1>Hello from Login form</h1>
-        </Container>
+        </div>
     )
 }
 
