@@ -1,18 +1,29 @@
 import React, {useState} from 'react';
 import Loginform  from './Loginform';
 import Signupform from './Signupform';
+import { Button } from 'semantic-ui-react'
 
 const Login = () => {
 
-    const [alignment, setAlignment] = useState('Sign up');
+    const [intent, setIntent] = useState('Sign up');
+    const [loginIsPositive, setLoginIsPostive] = useState(false)
+    const [signupIsPositive, setSignupPositive] = useState(true)
 
-    const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment);
+    const handleChange = (event, intent) => {
+        setIntent(intent);
+
+        if(intent === "Log in"){
+            setLoginIsPostive(true)
+            setSignupPositive(false)
+        }
+        else{
+            setSignupPositive(true)
+            setLoginIsPostive(false)
+        }
     }
 
     const renderForm = () => {
-        console.log(alignment)
-        if(alignment === "Log in"){
+        if(intent === "Log in"){
             return(<Loginform/>)
         }
         else{
@@ -21,11 +32,13 @@ const Login = () => {
     }
 
     return(
-        <div>
-            <div className = "ui buttons">
-                <button className = "ui button" onClick={ (event) => handleChange(event, "Sign up") } >Sign up</button>
-                <div className = "or"></div>
-                <button className = "ui button" onClick={ (event) => handleChange(event, "Log in") }>Login</button>
+        <div style = {{width: "50%", marginLeft: "auto", marginRight: "auto" }}>
+            <div align = "center">
+                <Button.Group>
+                    <Button positive = {signupIsPositive} onClick={ (event) => handleChange(event, "Sign up") } >Sign up</Button>
+                    <Button.Or />
+                    <Button positive = {loginIsPositive} onClick={ (event) => handleChange(event, "Log in") } >Login</Button>
+                </Button.Group>
             </div>
             {renderForm()}
         </div>

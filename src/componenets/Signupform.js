@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useState} from 'react';
+import { Form } from 'semantic-ui-react'
 
 const Signupform = () => {
 
@@ -32,25 +33,16 @@ const Signupform = () => {
 
     return(
         <div>
-            <h1>Hello from Sign up</h1>
-            <form className = "ui fluid form" onSubmit={signUpAction}>
-                <div className="ui input focus">
-                    <input name = "first" type="text" placeholder="First name" onChange = {(evt) => setFirstName(evt.target.value)} />
-                </div>
-                <div className="ui input focus">
-                    <input name = "last" type="text" placeholder="Last name"  onChange = {(evt) => setLastName(evt.target.value)}/>
-                </div>
-                <div className="ui input focus">
-                    <input name = "username" type="text" placeholder="Username"  onChange = {(evt) => setUsername(evt.target.value)}/>
-                </div>
-                <div className="ui input focus">
-                    <input name = "password" type="text" placeholder="Password"  onChange = {(evt) => setPassword(evt.target.value)}/>
-                </div>
-                <div className="ui input focus">
-                    <input type="text" placeholder="Confirm Password"  onChange = {(evt) => setRetry(evt.target.value)}/>
-                </div>
-                <button className="ui button" type="submit">Submit</button>
-            </form>
+            <Form onSubmit = {signUpAction}>
+                <Form.Group widths = "equal"> 
+                    <Form.Input label = "First name" placeholder = "First name" type = "text" name = "first" onChange = {(evt) => setFirstName(evt.target.value)}/>
+                    <Form.Input label = "Last name" placeholder = "Last name" type = "text" name = "last" onChange = {(evt) => setLastName(evt.target.value)}/>
+                </Form.Group>
+                <Form.Input label = "Username" type = "text" placeholder = "Username" name = "username" onChange = {(evt) => setUsername(evt.target.value)}/>
+                <Form.Input label = "Password" type = "password" placeholder = "Password" name = "password" onChange = {(evt) => setPassword(evt.target.value)}/>
+                <Form.Input label = "Confirm Password" type = "password" placeholder = "Confirm Password" onChange = {(evt) => setRetry(evt.target.value)}/>
+                <Form.Button type = "submit">Sign up!</Form.Button>
+            </Form>
             <h1>{response}</h1>
         </div>
     )

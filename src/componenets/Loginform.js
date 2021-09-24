@@ -14,7 +14,7 @@ const Loginform = () => {
                 console.log(res)
                 setReponse(res.data)
             }).catch(err => {
-                if(err.message == "Request failed with status code 401"){
+                if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
                 }
                 else{
