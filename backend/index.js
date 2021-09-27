@@ -52,13 +52,6 @@ passport.use(new LocalStrategy(
     }
 ));
 
-app.get('/test', (req,res) => {
-    if (req.isAuthenticated()) {
-        res.send(req.user)
-    }else{
-        res.send("Cookie in invalid" )
-    }
-})
 
 app.post('/login', cors(),
   passport.authenticate('local'),
@@ -103,6 +96,14 @@ app.post('/register', cors(), (req,res) =>{
         }
     });
 });
+
+app.post('/user', (req,res) => {
+    if (req.isAuthenticated()) {
+        res.send(req.user.username)
+    }else{
+        res.send("Cookie is invalid" )
+    }
+})
 
 app.listen(5000, () => {
     console.log("WELCOME TO MY FINAL WEBSITE wowoowoo")
