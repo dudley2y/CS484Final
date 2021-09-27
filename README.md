@@ -15,13 +15,12 @@ The login page currently toggles between states, the loginForm and SignupForm
 
 #### Sign up Form
 This form currently takes in first name, last name, username, password, and confirm password.
-On the react side, it currently checks if password and confirm are equal. If so, we check the database to see if user exists. If the user exists, we throw an error. If User doesn't exist, we add user, then login the user with a session.
+On the react side, it currently checks if password and confirm are equal. If so, we send a request to our backend ./register route. We will either get a "user already exists" or "Success".
+If success, we will be sent a session token.
 
 #### Login Form
 
-The login form currently takes in a username and password. When you click the login button, we make a request to our database to see if the user exists. If the user exists, we use bcrpyt to compare our hashed password to our plaintext password. 
-If user and pass is corrected, our page currently displays logged in. And we start a session.
-If user or pass is incorrect, passport will throw a 401 Unathorized error.
+The login form currently takes in a username and password. When you click the login button,we will make a request to our backend ./login route. login will either send a "401 Unauthorized" or a "Logged in". If logged in, we will be given a session token.
 
 
 
