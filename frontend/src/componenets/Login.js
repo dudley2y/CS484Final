@@ -3,6 +3,7 @@ import Loginform  from './Loginform';
 import Signupform from './Signupform';
 import { Button } from 'semantic-ui-react'
 
+
 const Login = () => {
 
     const [intent, setIntent] = useState('Sign up');
@@ -30,6 +31,7 @@ const Login = () => {
             return(<Signupform/>)
         }
     }
+ 
 
     return(
         <div style = {{width: "50%", marginLeft: "auto", marginRight: "auto" }}>
