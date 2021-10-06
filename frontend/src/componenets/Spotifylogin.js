@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const Main = () => {
+const Spotifylogin = () => {
 
     return(
         <div >
@@ -9,4 +9,4 @@ const Main = () => {
     )
 
 }
-export default Main;
+export default Spotifylogin;

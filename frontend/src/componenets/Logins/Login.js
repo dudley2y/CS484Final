@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Loginform  from './Loginform';
-import Signupform from './Signupform';
+import Loginform  from '../Forms/Loginform';
+import Signupform from '../Forms/Signupform';
 import { Button } from 'semantic-ui-react'
 
 

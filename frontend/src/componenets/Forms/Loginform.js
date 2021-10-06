@@ -1,8 +1,9 @@
 import axios from 'axios';
 // import Captcha  from './Captcha';
 import React, {useState} from 'react';
+import Spotifylogin from '../Spotifylogin';
+import Captcha from '../Captcha';
 import { Form } from 'semantic-ui-react';
-import ReCAPTCHA from "react-google-recaptcha";
 
 const Loginform = () => {
     const [username, setUsername] = useState("")
@@ -10,19 +11,6 @@ const Loginform = () => {
 
     const [response, setReponse] = useState("No response yet")
 
-    const Captcha = () => {
-        function onChange(value) {
-          console.log('Captcha value:', value);
-        }
-        return (
-          <div className="Captcha">
-            <ReCAPTCHA
-              sitekey="6LfUBakcAAAAAGhxM1OFfCIatnj5EO9WlOYCklq0"
-              onChange={onChange}
-            />
-          </div>
-        );
-      };
 
     const loginAction = (event) =>{
         if(username && password){
@@ -46,7 +34,6 @@ const Loginform = () => {
 
     return(
         <div>
-            {/* <Captcha/> */}
             <Form onSubmit={loginAction}>
                 <Form.Group widths = "equal"> 
                     <Form.Input label = "Username" type = "text" placeholder = "Username" name = "username" onChange = {(evt) => setUsername(evt.target.value)}/>
@@ -54,7 +41,7 @@ const Loginform = () => {
                 </Form.Group>
                 <Form.Button type = "submit">Login!</Form.Button>
             </Form>
-            {Captcha()}
+            <Captcha/>
             <h1>{response}</h1>
         </div>
     )
