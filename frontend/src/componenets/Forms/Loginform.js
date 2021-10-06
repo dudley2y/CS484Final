@@ -1,11 +1,12 @@
 import axios from 'axios';
 // import Captcha  from './Captcha';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import Spotifylogin from '../Spotifylogin';
 import Captcha from '../Captcha';
 import { Form } from 'semantic-ui-react';
 
 const Loginform = () => {
+    // const reRef = useRef();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 

@@ -1,4 +1,6 @@
 import ReCAPTCHA from "react-google-recaptcha";
+// import React, {useState, useRef} from 'react';
+
 
  
 const Captcha = () => {
@@ -8,7 +10,8 @@ const Captcha = () => {
   return (
     <div className="Captcha">
       <ReCAPTCHA
-        sitekey={process.env.NEXT_SITE_KEY}
+        sitekey={"6LfUBakcAAAAAGhxM1OFfCIatnj5EO9WlOYCklq0"}
+        // ref={reRef}
         onChange={onChange}
       />
     </div>
