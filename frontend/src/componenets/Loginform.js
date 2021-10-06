@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import Captcha  from './';
+// import Captcha  from './Captcha';
 import React, {useState} from 'react';
 import { Form } from 'semantic-ui-react';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -46,6 +46,7 @@ const Loginform = () => {
 
     return(
         <div>
+            {/* <Captcha/> */}
             <Form onSubmit={loginAction}>
                 <Form.Group widths = "equal"> 
                     <Form.Input label = "Username" type = "text" placeholder = "Username" name = "username" onChange = {(evt) => setUsername(evt.target.value)}/>
