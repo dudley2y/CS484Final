@@ -11,10 +11,10 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Login/>
           </Route>
-          <Route path="/spotify">
+          <Route exact path="/spotify">
             <AuthSpotify/>
           </Route>
         </Switch>
