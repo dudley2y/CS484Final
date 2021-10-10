@@ -1,8 +1,8 @@
 import axios from 'axios';
 // import Captcha  from './Captcha';
 import React, {useState, useRef} from 'react';
-import Spotifylogin from '../Spotifylogin';
-import Captcha from '../Captcha';
+// import Spotifylogin from './Spotifylogin';
+import Captcha from './Captcha';
 import { Form } from 'semantic-ui-react';
 
 const Loginform = () => {
