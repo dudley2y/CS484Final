@@ -1,17 +1,13 @@
-FROM node:alpine
+FROM node:14
 # Install app dependencies
-
-RUN mkdir -p /server
- 
-WORKDIR /server
-
-# Bundle app source
-COPY package.json /server
-COPY yarn.lock /server
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
 RUN yarn install
 
-COPY . /server
+# Bundle app source
+COPY . .
 
-# EXPOSE 3001
-CMD ["yarn", "start"]
+EXPOSE 8080
+CMD ["node", "index.js"]

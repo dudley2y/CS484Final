@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import Loginform  from '../Forms/Loginform';
-import Signupform from '../Forms/Signupform';
+import Loginform  from './Loginform';
+import Signupform from './Signupform';
 import { Button } from 'semantic-ui-react'
-
 
 const Login = () => {
 
@@ -31,7 +30,6 @@ const Login = () => {
             return(<Signupform/>)
         }
     }
- 
 
     return(
         <div style = {{width: "50%", marginLeft: "auto", marginRight: "auto" }}>
