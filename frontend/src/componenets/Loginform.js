@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, {useState, useRef} from 'react';
-// import Spotifylogin from './Spotifylogin';
 import Captcha from './Captcha';
 import { Form } from 'semantic-ui-react';
 

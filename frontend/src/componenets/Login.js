@@ -34,10 +34,14 @@ const Login = () => {
         if(intent === "Log in"){
             return(<Loginform/>)
         }
+        else if(intent == "Spotify Login"){
+            return(<Spotifylogin/>)
+        }
         else{
             return(<Signupform/>)
         }
     }
+    
 
     return(
         <div style = {{width: "50%", marginLeft: "auto", marginRight: "auto", paddingRight: "1em"}}>
@@ -47,7 +51,7 @@ const Login = () => {
                     <Button.Or />
                     <Button positive = {loginIsPositive} onClick={ (event) => handleChange(event, "Log in") } >Login</Button>
                     <Button.Or />
-                    <Button positive = {spotifyLoginIsPositive} onClick={ (event) => handleChange(event, "Spotify Log in") } >Login with Spotify</Button>
+                    <Button positive = {spotifyLoginIsPositive} onClick={ (event) => handleChange(event, "Spotify Login") } >Login with Spotify</Button>
                 </Button.Group>
             </div>
             {renderForm()}
