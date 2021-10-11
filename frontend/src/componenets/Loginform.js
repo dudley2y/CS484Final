@@ -1,7 +1,5 @@
 import axios from 'axios';
-// import Captcha  from './Captcha';
 import React, {useState, useRef} from 'react';
-// import Spotifylogin from './Spotifylogin';
 import Captcha from './Captcha';
 import { Form } from 'semantic-ui-react';
 
@@ -40,9 +38,9 @@ const Loginform = () => {
                     <Form.Input label = "Username" type = "text" placeholder = "Username" name = "username" onChange = {(evt) => setUsername(evt.target.value)}/>
                     <Form.Input label = "Password" type = "password" placeholder = "Password" name = "password" onChange = {(evt) => setPassword(evt.target.value)}/>   
                 </Form.Group>
+                <Captcha/>
                 <Form.Button type = "submit">Login!</Form.Button>
             </Form>
-            <Captcha/>
             <h1>{response}</h1>
         </div>
     )
