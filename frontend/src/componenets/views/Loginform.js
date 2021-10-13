@@ -18,12 +18,19 @@ const Loginform = () => {
 
     const loginAction = (event) =>{
         if(username && password){
-            axios.post("http://localhost:5000/login", {'username': username, 'password': password
+            axios({
+                method: "post",
+                data: {
+                    username: username,
+                    password: password
+                },
+                withCredentials: true,
+                url:"http://localhost:5000/login"
+                
             }).then( res => {
-                console.log(res)
                 setReponse(res.data)
                 history.push("./HomePage")
-            }).catch(err => {
+            }).catch( err => {
                 if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
                 }
@@ -31,10 +38,10 @@ const Loginform = () => {
                     setReponse(JSON.stringify(err))
                 }
             })
-        }else{
-            console.log("not valid")
         }
-        event.preventDefault();
+        else{
+            console.log("username or password not there")
+        }
     }
 
     return(

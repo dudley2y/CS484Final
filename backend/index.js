@@ -1,35 +1,47 @@
 const express = require("express");
-const app = express();
+const cors = require('cors')
+const passport = require("passport");
+const LocalStrategy =  require("passport-local").Strategy;
+const cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
+const session = require('express-session')
 const bodyParser = require('body-parser');
 const sqlite3 = require("sqlite3")
-const bcrypt = require('bcrypt');
-const passport = require("passport");
-const LocalStrategy =  require("passport-local");
-var session = require("express-session")
-const cors = require('cors')
 
-app.use(session({
-    secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
-  }));
+const app = express();
 
-app.use(cors())
+//Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}))
+
+app.use(session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+}))
+
+app.use(cookieParser("secret"))
+
+
 app.use(passport.initialize());
 app.use(passport.session())
 
 var db = new sqlite3.Database('./test.db')
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
-});
+    done(null, user.username);
+  });
   
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+passport.deserializeUser(function(id, done) {
+    const sqlSearch = `SELECT * FROM userLogin WHERE username = ?;`
+    db.get(sqlSearch, [id], (err,row) => {
+        done(null, row)
+    })
 });
 
 passport.use(new LocalStrategy(
@@ -53,15 +65,13 @@ passport.use(new LocalStrategy(
 ));
 
 
-app.post('/login', cors(),
-  passport.authenticate('local'),
-  function(req, res) {
+app.post('/login', passport.authenticate('local'), (req, res) => {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     res.send("Logged in")
   });
 
-app.post('/register', cors(), (req,res) =>{
+app.post('/register', (req,res) =>{
     const name = req.body.name;
     const username = req.body.username;
     const password = req.body.password;

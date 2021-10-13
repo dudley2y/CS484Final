@@ -16,19 +16,25 @@ const Signupform = () => {
     const signUpAction = (event) => {
         if(firstName && lastName && username && password && retry && password === retry){
             // valid sign up 
-            axios.post("http://localhost:5000/register", {'name':firstName , 'username': username, 'password': password
+            axios({
+                method: "post",
+                data: {
+                    name: firstName,
+                    username: username,
+                    password: password
+                },
+                withCredentials: true,
+                url:"http://localhost:5000/register"
+                
             }).then( res => {
-                console.log(res)
                 setReponse(res.data)
-            }).catch(err => {
-                setReponse(err)
+            }).catch( err => {
+                setReponse(JSON.stringify(err))
             })
-        }else{
+        }
+        else{
             console.log("not valid")
         }
-
-        event.preventDefault();
-
     }
 
     return(
