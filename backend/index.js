@@ -98,6 +98,7 @@ app.post('/register', cors(), (req,res) =>{
 });
 
 app.post('/user', (req,res) => {
+    // console.log(req.user)
     if (req.isAuthenticated()) {
         res.send(req.user.username)
     }else{
@@ -107,4 +108,17 @@ app.post('/user', (req,res) => {
 
 app.listen(5000, () => {
     console.log("WELCOME TO MY FINAL WEBSITE wowoowoo")
+})
+
+// app.get('/', (req, res) => {
+//     res.send('Hi')
+// })
+
+app.post('/edit_user', (req,res) => {
+    const current_user = req.user.username;
+    const updated_password = req.body.password
+    const sqlQuery = `UPDATE userLogin SET password = "${updated_password}", WHERE username ="${current_user}";`
+    db.run(sqlQuery)
+    console.log(current_user, updated_password, updated_password_Query)
+    res.send('success!')
 })

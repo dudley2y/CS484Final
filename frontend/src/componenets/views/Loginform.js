@@ -12,7 +12,6 @@ const Loginform = () => {
     // const reRef = useRef();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
     const [response, setReponse] = useState("No response yet")
 
 
@@ -22,8 +21,13 @@ const Loginform = () => {
             }).then( res => {
                 console.log(res)
                 setReponse(res.data)
+<<<<<<< Updated upstream
                 history.push("./HomePage")
             }).catch(err => {
+=======
+                history.push("./account")
+            }).catch( err => {
+>>>>>>> Stashed changes
                 if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
                 }
