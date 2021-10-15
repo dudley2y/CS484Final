@@ -1,13 +1,3 @@
-<<<<<<< Updated upstream
-import React from 'react';
-
-const AccountSettings= () => {
-
-    
-    return(
-        <div>
-            <h1>yeet</h1>
-=======
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form } from 'semantic-ui-react';
@@ -18,19 +8,21 @@ const AccountSettings= () => {
     const [response, setReponse] = useState("No response yet")
 
 
-    const updatePassword = (event) =>{
+    const loginAction = (event) =>{
         if(password){
-            axios({
-                method: "post",
-                data: {
-                    username: 'jr',
-                    password: password
-                },
-                withCredentials: true,
-                url:"http://localhost:5000/edit_user"
-                
+            axios.post("http://localhost:5000/edit_user", {'password': password
+        }).then( res => {
+            console.log(res)
+            setReponse(res.data)
+        }).catch(err => {
+            setReponse(err)
+        })
+
+            axios.post("http://localhost:5000/edit_user", {'password': password
             }).then( res => {
+                console.log(res)
                 setReponse(res.data)
+
             }).catch( err => {
                 if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
@@ -39,22 +31,22 @@ const AccountSettings= () => {
                     setReponse(JSON.stringify(err))
                 }
             })
+        }else{
+            console.log("not valid")
         }
-        else{
-            console.log("username or password not there")
-        }
+        event.preventDefault();
     }
     
     
     return(
         <div>
-            <Form onSubmit={updatePassword}>
+            <Form onSubmit={loginAction}>
                 <Form.Group>
                     <Form.Input label = "New_Password" type="text" placeholder="New Password" name = "password" onChange = {(evt) => setPassword(evt.target.value)}/>
                 </Form.Group>
                 <Form.Button type = "submit">Submit Password Change!</Form.Button>
             </Form>
->>>>>>> Stashed changes
+            <h1>{response}</h1>
         </div>
     )
 }

@@ -114,11 +114,13 @@ app.listen(5000, () => {
 //     res.send('Hi')
 // })
 
-app.post('/edit_user', (req,res) => {
-    const current_user = req.user.username;
+app.post('/edit_password', cors(), (req,res) => {
+    const current_user = req.user.username
     const updated_password = req.body.password
-    const sqlQuery = `UPDATE userLogin SET password = "${updated_password}", WHERE username ="${current_user}";`
-    db.run(sqlQuery)
-    console.log(current_user, updated_password, updated_password_Query)
+
+    // const update_password_query = `UPDATE userLogin SET password = "${updated_password}", WHERE username ="${current_user}";`
+    // db.run(update_password_query)
+    console.log(req, current_user, updated_password)
+
     res.send('success!')
 })

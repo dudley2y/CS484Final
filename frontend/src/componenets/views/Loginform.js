@@ -21,13 +21,9 @@ const Loginform = () => {
             }).then( res => {
                 console.log(res)
                 setReponse(res.data)
-<<<<<<< Updated upstream
-                history.push("./HomePage")
-            }).catch(err => {
-=======
+
                 history.push("./account")
             }).catch( err => {
->>>>>>> Stashed changes
                 if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
                 }
