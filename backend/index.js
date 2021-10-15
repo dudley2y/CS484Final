@@ -16,11 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(cors({
     origin: "http://localhost:3000",
-<<<<<<< HEAD
     credentials: true
-=======
-    credentials: true,
->>>>>>> dev
 }))
 
 app.use(session({
@@ -68,14 +64,10 @@ passport.use(new LocalStrategy(
     }
 ));
 
-<<<<<<< HEAD
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-=======
-app.post('/login', passport.authenticate('local'), (req, res) => {
->>>>>>> dev
     res.send("Logged in")
 });
 

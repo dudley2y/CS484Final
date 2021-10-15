@@ -2,14 +2,11 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Login from './componenets/views/Login'
-import AuthSpotify from './componenets/views/AuthSpotify'
-import HomePage from './componenets/views/HomePage';
-<<<<<<< HEAD
+import Login from './componenets/Login'
+import AuthSpotify from './componenets/AuthSpotify'
+import HomePage from './componenets/HomePage';
 import axios from 'axios';
-=======
-import AccountSettings from './componenets/views/AccountSettings';
->>>>>>> dev
+import AccountSettings from './componenets/AccountSettings';
 
 
 // axios({
