@@ -28,8 +28,12 @@ const Loginform = () => {
                 
             }).then( res => {
                 setReponse(res.data)
+<<<<<<< HEAD
 
                 history.push("./account")
+=======
+                history.push("./HomePage")
+>>>>>>> dev
             }).catch( err => {
                 if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
