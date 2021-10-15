@@ -5,44 +5,35 @@ import { Form } from 'semantic-ui-react';
 const AccountSettings= () => {
 
     const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
     const [response, setReponse] = useState("No response yet")
 
 
     const loginAction = (event) =>{
-        if(password){
-            axios.post("http://localhost:5000/edit_user", {'password': password
-        }).then( res => {
-            console.log(res)
-            setReponse(res.data)
-        }).catch(err => {
-            setReponse(err)
-        })
-
-            axios.post("http://localhost:5000/edit_user", {'password': password
+        if(password || name){
+            axios({
+                method: "post",
+                data: {
+                    name: name,
+                    password: password
+                },
+                withCredentials: true,
+                url:"http://localhost:5000/edit_user"
+                
             }).then( res => {
-                console.log(res)
                 setReponse(res.data)
-
             }).catch( err => {
-                if(err.message === "Request failed with status code 401"){
-                    setReponse("Failed login")
-                }
-                else{
-                    setReponse(JSON.stringify(err))
-                }
+                setReponse(JSON.stringify(err))
             })
-        }else{
-            console.log("not valid")
         }
-        event.preventDefault();
     }
-    
-    
+
     return(
         <div>
             <Form onSubmit={loginAction}>
                 <Form.Group>
-                    <Form.Input label = "New_Password" type="text" placeholder="New Password" name = "password" onChange = {(evt) => setPassword(evt.target.value)}/>
+                    <Form.Input label = "Change Password" type="text" placeholder="New Password" name = "password" onChange = {(evt) => setPassword(evt.target.value)}/>
+                    <Form.Input label = "Change Name" type="text" placeholder="New Name" name = "name" onChange = {(evt) => setName(evt.target.value)}/>
                 </Form.Group>
                 <Form.Button type = "submit">Submit Password Change!</Form.Button>
             </Form>
