@@ -1,11 +1,11 @@
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import React from 'react';
-import AccountSettings from './componenets/AccountSettings';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from './componenets/views/Login'
 import AuthSpotify from './componenets/views/AuthSpotify'
 import HomePage from './componenets/views/HomePage';
+import AccountSettings from './componenets/views/AccountSettings';
 
 
 function App() {
