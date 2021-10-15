@@ -5,18 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from './componenets/Login'
 import AuthSpotify from './componenets/AuthSpotify'
 import HomePage from './componenets/HomePage';
-import axios from 'axios';
 import AccountSettings from './componenets/AccountSettings';
-
-
-// axios({
-//   method: "get",
-//   withCredentials: true,
-//   url:"http://localhost:5000/"
-  
-// }).then(res => {
-//   console.log(res)
-// })
 
 function App() {
   return (

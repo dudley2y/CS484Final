@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import { Form } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom';
 
 const Signupform = () => {
+
+    const history = useHistory()
 
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -10,7 +13,7 @@ const Signupform = () => {
     const [password, setPassword] = useState("")
     const [retry, setRetry] = useState("")
 
-    const [response, setReponse] = useState("No response yet")
+    const [response, setReponse] = useState("")
 
 
     const signUpAction = (event) => {
@@ -27,6 +30,9 @@ const Signupform = () => {
                 url:"http://localhost:5000/register"
                 
             }).then( res => {
+                if(res.data == "Success"){
+                    history.push('/HomePage')
+                }
                 setReponse(res.data)
             }).catch( err => {
                 setReponse(JSON.stringify(err))

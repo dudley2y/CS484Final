@@ -110,44 +110,50 @@ app.post('/register', (req,res) =>{
 app.post('/user', (req,res) => {
     // console.log(req.user)
     if (req.isAuthenticated()) {
-        res.send(req.user.username)
+        res.send(req.user)
     }else{
         res.send("Cookie is invalid" )
     }
 })
 
 
+app.post('/logout', (req,res) => {
+    req.logout();
+    res.send("success");
+})
+
+app.post('/edit_username', (req,res) => {
+    const current_user = req.user.username
+    const updated_name = req.body.name
+
+    const update_password_query = `UPDATE userLogin SET name = "${updated_name}" WHERE username ="${current_user}";`
+    db.run(update_password_query)
+    res.send('success!')
+})
+
+app.post('/edit_password', (req,res) => {
+    const current_user = req.user.username
+    const updated_password = req.body.password
+    bcrypt.hash(updated_password, 10, function(err, hash){
+        if(err){
+            console.log(err)
+            return res.sendStatus(500)
+        }
+        console.log("hashing password:", updated_password, "Created hash: ",hash)
+        const update_password_query = `UPDATE userLogin SET password = "${hash}" WHERE username ="${current_user}";`
+        db.run(update_password_query)
+        res.send('success!')
+    });
+})
+
+app.post('/delete_user', (req,res) => {
+    const current_user = req.user.username
+    const delete_user_query = `DELETE FROM userLogin WHERE username="${current_user}";`
+    db.run(delete_user_query)
+    req.logout()
+    res.send("sucess")
+})
 
 app.listen(5000, () => {
     console.log("WELCOME TO MY FINAL WEBSITE wowoowoo")
-})
-
-// app.get('/', (req, res) => {
-//     res.send('Hi')
-// })
-
-app.post('/edit_user', (req,res) => {
-    const current_user = req.user.username
-    const current_users_name = req.user.name
-
-    const updated_name = req.body.name
-    const updated_password = req.body.password
-    if (updated_password){
-        bcrypt.hash(updated_password, 10, function(err, hash){
-            if(err){
-                console.log(err)
-                return res.sendStatus(500)
-            }
-            console.log("hashing password:", updated_password, "Created hash: ",hash)
-            const update_password_query = `UPDATE userLogin SET password = "${hash}" WHERE username ="${current_user}";`
-            db.run(update_password_query)
-        });
-    }
-    if (updated_name){
-        const update_password_query = `UPDATE userLogin SET name = "${updated_name}" WHERE username ="${current_user}";`
-        db.run(update_password_query)
-    }
-    console.log(current_user, current_users_name, updated_password, updated_name)
-
-    res.send('success!')
 })

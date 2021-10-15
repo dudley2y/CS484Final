@@ -6,13 +6,12 @@ import { Form } from 'semantic-ui-react';
 import HomePage from './HomePage';
 import Spotifylogin from './Spotifylogin';
 
-
 const Loginform = () => {
     const history = useHistory();
     // const reRef = useRef();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [response, setReponse] = useState("No response yet")
+    const [response, setReponse] = useState("")
 
 
     const loginAction = (event) =>{
@@ -29,7 +28,7 @@ const Loginform = () => {
             }).then( res => {
                 setReponse(res.data)
 
-                history.push("./account")
+                history.push("./HomePage")
             }).catch( err => {
                 if(err.message === "Request failed with status code 401"){
                     setReponse("Failed login")
