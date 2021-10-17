@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Loginform  from './Loginform';
 import Signupform from './Signupform';
-import Spotifylogin from './Spotifylogin'
 import { Button } from 'semantic-ui-react'
 
 const Login = () => {

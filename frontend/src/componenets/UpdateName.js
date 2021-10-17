@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Form } from 'semantic-ui-react';
 
 
-const UpdateUsername = () => {
+const UpdateName = () => {
 
     const [name, setName] = useState("")
     const [response, setReponse] = useState("")
@@ -13,10 +13,11 @@ const UpdateUsername = () => {
             axios({
                 method: "post",
                 data: {
-                    name: name,
+                    name: name
                 },
                 withCredentials: true,
-                url:"http://localhost:5000/edit_username"
+                url:"http://localhost:5000/edit_name"
+                
             }).then( res => {
                 setReponse(res.data)
             }).catch( err => {
@@ -24,22 +25,22 @@ const UpdateUsername = () => {
             })
         }
         else{
-            setReponse("No name input!")
+            setReponse("No Name!")
         }
     }
 
     return(
         <div>
-            <h1>Update Username</h1>
-            <Form onSubmit ={submitAction}>
+            <h1>Update Name</h1>
+            <Form onSubmit={submitAction}>
                 <Form.Group>
-                    <Form.Input label = "Change Username" type="text" placeholder="New Name" name = "name" onChange = {(evt) => setName(evt.target.value)}/>  
+                    <Form.Input label = "Change Name" type="text" placeholder="New Name" name = "name" onChange = {(evt) => setName(evt.target.value)}/>
                 </Form.Group>
-                <Form.Button type = "submit">Submit Username Change!</Form.Button>
+                <Form.Button type = "submit">Submit Name Change!</Form.Button>
             </Form>
             <h1>{response}</h1>
         </div>
     )
 }
 
-export default UpdateUsername;
+export default UpdateName;

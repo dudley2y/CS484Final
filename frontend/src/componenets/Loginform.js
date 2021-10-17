@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import Captcha from './Captcha';
 import { Form } from 'semantic-ui-react';
 import HomePage from './HomePage';
-import Spotifylogin from './Spotifylogin';
 
 const Loginform = () => {
     const history = useHistory();

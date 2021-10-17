@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt');
 const session = require('express-session')
 const bodyParser = require('body-parser');
-const sqlite3 = require("sqlite3")
+const sqlite3 = require("sqlite3");
 
 const app = express();
 
@@ -108,7 +108,7 @@ app.post('/register', (req,res) =>{
 });
 
 app.post('/user', (req,res) => {
-    // console.log(req.user)
+    console.log(req.user)
     if (req.isAuthenticated()) {
         res.send(req.user)
     }else{
@@ -122,13 +122,52 @@ app.post('/logout', (req,res) => {
     res.send("success");
 })
 
+app.post('/edit_name', (req,res) => {
+    const curr_user = req.user.username
+    const updated_name = req.body.name 
+
+    const update_name_query = `UPDATE userLogin SET name= "${updated_name}" WHERE username ="${curr_user}";`
+    db.run(update_name_query , [] , (err) => {
+        if (err) { } // do something
+        else{
+
+            const user = { password: req.user.password, name: updated_name, username: req.user.username }
+            req.logOut()
+
+            req.login(user, (err) => {
+                if(err){ return res.send(err)}
+                else{ return res.send("Success")}
+            })
+        }
+    })
+
+})
+
 app.post('/edit_username', (req,res) => {
     const current_user = req.user.username
-    const updated_name = req.body.name
+    const updated_username = req.body.name
 
-    const update_password_query = `UPDATE userLogin SET name = "${updated_name}" WHERE username ="${current_user}";`
-    db.run(update_password_query)
-    res.send('success!')
+    const checkUsernameExist = `SELECT * FROM userLogin where username = "${updated_username}"`
+    db.run(checkUsernameExist, (err, row) => {
+        if (err) {} // do something idk yet 
+        else{
+            if(row){
+                res.send("Username already exists try another one")
+            }
+            else{
+                const update_username_query = `UPDATE userLogin SET username = "${updated_username}" WHERE username ="${current_user}";`
+                db.run(update_username_query)
+
+                const user = { "username": updated_username, "password": req.user.password, "name": req.user.name}
+                req.logOut();
+
+                req.login(user, (err) => {
+                    if(err){ return res.send(err)}
+                    else{ return res.send("Success")}
+                })    
+            }
+        }
+    })
 })
 
 app.post('/edit_password', (req,res) => {
@@ -141,8 +180,19 @@ app.post('/edit_password', (req,res) => {
         }
         console.log("hashing password:", updated_password, "Created hash: ",hash)
         const update_password_query = `UPDATE userLogin SET password = "${hash}" WHERE username ="${current_user}";`
-        db.run(update_password_query)
-        res.send('success!')
+        db.run(update_password_query, (err) => {
+            if(err) { }
+            else{
+                const user = { name: req.user.name, username: req.user.username, password: hash}
+
+                req.logOut();
+
+                req.login(user, (err) => {
+                    if(err){ return res.send(err)}
+                    else{ return res.send("Success")}
+                }) 
+            }
+        })
     });
 })
 
