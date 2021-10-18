@@ -147,9 +147,11 @@ app.post('/edit_username', (req,res) => {
     const current_user = req.user.username
     const updated_username = req.body.name
 
-    const checkUsernameExist = `SELECT * FROM userLogin where username = "${updated_username}"`
-    db.run(checkUsernameExist, (err, row) => {
-        if (err) {} // do something idk yet 
+    const checkUsernameExist = `SELECT * FROM userLogin WHERE username="${updated_username}";`
+    //console.log(checkUsernameExist)
+    db.get(checkUsernameExist,(err, row) => {
+
+        if (err) { } // do something idk yet 
         else{
             if(row){
                 res.send("Username already exists try another one")

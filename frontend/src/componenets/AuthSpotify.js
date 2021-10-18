@@ -14,7 +14,7 @@ const Spotifylogin = () => {
 
     const fullAuthLink = 'https://accounts.spotify.com/authorize' + '?response_type=code' + '&client_id=' + clientId + (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +'&redirect_uri=' + encodeURIComponent(redirect_uri)
     const requestSpotify = () => {
-        /*
+
         axios({
             method: "GET",
             //withCredentials: true,
@@ -23,14 +23,16 @@ const Spotifylogin = () => {
         }).then( res => {
             console.log(res)
         })
-        */
        history.push(fullAuthLink)
     }
     
     return(
         <div >
             <h1>Yoote</h1>
-            <button onClick = {requestSpotify}>Click meee</button>
+            <a href = {fullAuthLink}>
+                <button>Click meee</button>
+            </a>
+            
         </div>
     )
 
