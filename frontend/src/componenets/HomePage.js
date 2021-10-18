@@ -2,9 +2,39 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from 'axios'
+import { Button } from 'semantic-ui-react'
+import YoutubeSearchBar from './YoutubeSearch';
 
 
 const HomePage= () => {
+
+    const [intent, setIntent] = useState('Search Spotify');
+    const [spotifyIsPositive, setSpotifyIsPositive] = useState(true)
+    const [youtubeIsPositive, setYoutubeIsPositive] = useState(false)
+
+    const handleChange = (event, intent) => {
+        setIntent(intent);
+
+        if(intent === "Spotify"){
+            setSpotifyIsPositive(true)
+            setYoutubeIsPositive(false)
+        }
+        else{
+            setYoutubeIsPositive(true)
+            setSpotifyIsPositive(false)
+        }
+    }
+
+    const renderForm = () => {
+        if(intent === "Search Spotify"){
+            return(<YoutubeSearchBar/>)
+        }
+        else{
+            return(<YoutubeSearchBar/>)
+        }
+    }
+    
+
     const history = useHistory();
 
     const redirectSettings = () => {
@@ -54,6 +84,12 @@ const HomePage= () => {
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
+            <Button.Group>
+                <Button positive = {setSpotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
+                <Button.Or />
+                <Button positive = {setYoutubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
+            </Button.Group>
+            {renderForm()}
         </div>
     )
 }
