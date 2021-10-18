@@ -12,6 +12,8 @@ const HomePage= () => {
     const [spotifyIsPositive, setSpotifyIsPositive] = useState(true)
     const [youtubeIsPositive, setYoutubeIsPositive] = useState(false)
 
+
+    // On change effects, search bar and more.
     const handleChange = (event, intent) => {
         setIntent(intent);
 
@@ -35,6 +37,8 @@ const HomePage= () => {
     }
     
 
+
+    // Account information Dropdown
     const history = useHistory();
 
     const redirectSettings = () => {
