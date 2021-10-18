@@ -3,14 +3,17 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from 'axios'
 import { Button } from 'semantic-ui-react'
-import YoutubeSearchBar from './YoutubeSearch';
+import { Form } from 'semantic-ui-react';
 
 
 const HomePage= () => {
 
+    const [response, setReponse] = useState("")
     const [intent, setIntent] = useState('Search Spotify');
     const [spotifyIsPositive, setSpotifyIsPositive] = useState(true)
     const [youtubeIsPositive, setYoutubeIsPositive] = useState(false)
+
+    const [yt_search, setYoutubeSearch] = useState("")
 
 
     // On change effects, search bar and more.
@@ -29,13 +32,39 @@ const HomePage= () => {
 
     const renderForm = () => {
         if(intent === "Search Spotify"){
-            return(<YoutubeSearchBar/>)
+            return(youtubeSearchAction)
         }
         else{
-            return(<YoutubeSearchBar/>)
+            return(youtubeSearchAction)
         }
     }
     
+    const youtubeSearchAction = (event) =>{
+        if(yt_search){
+            axios({
+                method: "post",
+                data: {
+                    yt_search: yt_search
+                },
+                withCredentials: true,
+                url:"http://localhost:5000/youtube_api_search"
+                
+            }).then( res => {
+                setReponse(res.data)
+
+            }).catch( err => {
+                if(err.message === "Request failed with status code 401"){
+                    setReponse("Failed search lookup")
+                }
+                else{
+                    setReponse(JSON.stringify(err))
+                }
+            })
+        }
+        else{
+            console.log("No search sent")
+        }
+    }
 
 
     // Account information Dropdown
@@ -93,6 +122,13 @@ const HomePage= () => {
                 <Button.Or />
                 <Button positive = {setYoutubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
             </Button.Group>
+
+            <Form onSubmit={youtubeSearchAction}>
+                <Form.Group widths = "equal"> 
+                    <Form.Input label = "Search" type = "text" placeholder = "Search Youtube" name = "yt_search" onChange = {(evt) => setYoutubeSearch(evt.target.value)}/> 
+                </Form.Group>
+                <Form.Button type = "submit">Search</Form.Button>
+            </Form>
             {renderForm()}
         </div>
     )

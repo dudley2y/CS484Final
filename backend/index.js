@@ -212,7 +212,6 @@ app.post('/youtube_api_search', (req,res) => {
     const search_string = req.body.yt_search
     console.log("user searched for: ", search_string)
     
-    
     res.send("sucess")
 })
 
