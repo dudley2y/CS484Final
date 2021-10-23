@@ -1,7 +1,7 @@
 # Assignment 2
-
 [Github Link to Project](https://github.com/UIC-CS484/assignment-2---final-project-repository-team6)
 
+## Please use: ```yarn install``` to install all packages before testing. You may need to run the command in both /frontend and /backend
 ## Member Names:
 
 Jacob Raffe 
@@ -12,8 +12,8 @@ Josh Dudly
 
 
 ## Workflow Strategy for Testing: 
-### => Navigate to the /frontend folder 
-### yarn test
+### Step 1: => Navigate to the /frontend folder 
+### Step 2: yarn test
 
 1. Get basic tests to pass. Create a test that should pass and one that should fail such as 
 ```jest 
