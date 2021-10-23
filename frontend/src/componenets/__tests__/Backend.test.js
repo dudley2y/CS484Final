@@ -12,18 +12,18 @@ import app from '../../../../backend/index.js'
 
 
 // test fails only because jest cant access the database 
-// describe("POST /register", () => {
-//   describe("PASS TEST: When passed a username and password", () => {
-//     test("should respond with a 200 status code", async () => {
-//       const response = await request(app).post("/register").send({
-//         name: "name", 
-//         username: "username", 
-//         password: "password" 
-//       })
-//       expect(response.statusCode).toBe(200)
-//     })
-//   })
-// })
+describe("POST /register", () => {
+  describe("PASS TEST: When passed a username and password", () => {
+    test("should respond with a 200 status code", async () => {
+      const response = await request(app).post("/register").send({
+        name: "name", 
+        username: "username", 
+        password: "password" 
+      })
+      expect(response.statusCode).toBe(200)
+    })
+  })
+})
 
 describe("POST /logout", () => {
   describe("PASS TEST: Test should pass with expected value", () =>{
@@ -44,5 +44,16 @@ describe("POST /youtube_api_search", () => {
       expect(response.statusCode).not.toBe(401);
       expect(response.statusCode).toBe(200);
     })
+  })
+})
+
+describe("GET /user", () => {
+  describe("Checking cookie is not set because there is no user logged in", () => {
+    test('No cookie returned unless user is logged in', async () => {
+      const response = await request(app)
+      .get('/user')
+        .expect('Content-Type', /text/)
+        .expect(404)
+    }); 
   })
 })
