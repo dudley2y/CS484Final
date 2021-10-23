@@ -13,7 +13,7 @@ Josh Dudly
 
 ## Workflow Strategy for Testing: 
 ### => Navigate to the /frontend folder 
-### run yarn test
+### yarn test
 
 1. Get basic tests to pass. Create a test that should pass and one that should fail such as 
 ```jest 
