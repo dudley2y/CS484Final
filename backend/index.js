@@ -204,6 +204,19 @@ app.post('/delete_user', (req,res) => {
     res.send("sucess")
 })
 
+
+
+// Search Section
+
+app.post('/youtube_api_search', (req,res) => {
+    const search_string = req.body.yt_search
+    console.log("user searched for: ", search_string)
+    
+    res.send("sucess")
+})
+
 app.listen(5000, () => {
     console.log("WELCOME TO MY FINAL WEBSITE wowoowoo")
 })
+
+module.exports = app
