@@ -9,7 +9,7 @@ Josh Dudly
 > (jdudle4) @dudley2y
 
 
-**Workflow Strategy for Testing: Please navigate to the <b>/frontend<b> folder and run <b>yarn test<b>.**
+**Workflow Strategy for Testing: Please navigate to the ##/frontend folder and run ##yarn test.**
 
 1. Get basic tests to pass. Create a test that should pass and one that should fail such as 
 ```jest 
