@@ -1,6 +1,8 @@
+# Assignment 2
+
 [Github Link to Project](https://github.com/UIC-CS484/assignment-2---final-project-repository-team6)
 
-**Member Names:**
+## Member Names:
 
 Jacob Raffe 
 > (jraffe2) @jakeraffe
