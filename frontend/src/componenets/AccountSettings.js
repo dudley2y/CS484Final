@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Menu } from 'semantic-ui-react'
 import UpdateUsername from './UpdateUsername';
 import UpdatePassword from './UpdatePassword';
