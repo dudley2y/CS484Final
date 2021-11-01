@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 import { useHistory} from 'react-router-dom';
 import axios from 'axios';
 
+
 const querystring = require('querystring');
 
 const SpotifySuccess = () => {
 
     const history = useHistory();
-
-    const [tokens, setToken]  = useState()
 
     const clientId = "426327bb47284651ba7d3aac5790edc1";
     const clientSecret = "e418005aab42495587ced18596035912"
@@ -21,7 +20,7 @@ const SpotifySuccess = () => {
         history.push('./')
     }
 
-    const code = url.searchParams.get('code'); 
+    const code = url.searchParams.get('code');
 
     const getToken = () => {
 
@@ -40,33 +39,29 @@ const SpotifySuccess = () => {
       };
 
       axios.post("https://accounts.spotify.com/api/token", querystring.stringify(data), headers).then( res => {
-        setToken(res.data.access_token)
-      })
-
-    }
-
-    const doTheThingy = () => {
-
-      const headers = {
-        headers: {
-          'Accept': 'application/json',
-           Authorization: 'Bearer ' + tokens
-        }
-      };
-
-      axios.get("https://api.spotify.com/v1/me", headers).then(response => {
-        console.log(response)
+        console.log(res)
+        axios({
+          method: "post",
+          data:{
+            access_token: res.data.access_token,
+            refresh_token: res.data.refresh_token
+          },
+          withCredentials: true,
+          url:"http://localhost:5000/spotifyInit"
+        }).then( response => {
+          if(response.data === "Success"){
+            history.push('../HomePage')
+          }
+        })
       })
     }
 
-    return(
-        <div >
-            <h1>Freeeee dataaa</h1>
-
-            <button onClick = {getToken}>Get Token </button>
-            <button onClick = {doTheThingy}>Do the thing</button>
-        </div>
-    )
+  return(
+    <div>
+      <h1>Freee dataaaaa</h1>
+      <button onClick = {getToken}>Get Token</button>
+    </div>
+  )
 
 }
 export default SpotifySuccess;
