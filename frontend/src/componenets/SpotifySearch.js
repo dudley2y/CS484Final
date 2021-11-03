@@ -24,20 +24,31 @@ const SpotifySearch = () => {
     }
 
     const getToken = () => {
-
-        axios({
-            method: "get",
-            withCredentials: true,
-            url:"http://localhost:5000/spotify_accessToken"
-        }).then( res => {
-            setTokens()
-            if(res.data != "Error"){
-                setTokens(res.data)
-            }
-            else{
-                console.log("error")
-            }
-        })
+        if(!tokens){
+            axios({
+                method: "get",
+                withCredentials: true,
+                url:"http://localhost:5000/spotify_accessToken"
+            }).then( res => {
+                setTokens()
+                if(res.data != "Error"){
+                    setTokens(res.data)
+                }
+                else{
+                    console.log("error")
+                }
+            })
+        }
+        else{
+            const headers = {
+                headers: {
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + tokens,
+                }
+            };
+            searchSpotifySongs(headers)
+            getUsersRecentSongs(headers)
+        }
     }
 
     const searchSpotifySongs = (headers) => {
@@ -55,7 +66,10 @@ const SpotifySearch = () => {
                 response.data.tracks.items.forEach(element => {
                     setSongs( songs => [...songs,<SpotifySong name = {element.name} id = {element.id} uri = {element.uri} artist = {element.artists[0].name} key = {element.id} update = { setSongUri } imageSrc = {element.album.images[2].url} /> ])
                 })
-            });
+            }).catch( err => {
+                setTokens()
+                getToken()
+            })
     }
 
     const getUsersRecentSongs = (headers) => {
@@ -83,7 +97,6 @@ const SpotifySearch = () => {
 
     useEffect( () => {
         if(tokens){
-
             const headers = {
                 headers: {
                 'Accept': 'application/json',
