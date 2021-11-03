@@ -3,16 +3,6 @@ import { PieChart , Pie, ResponsiveContainer } from 'recharts';
 
 const CommonArtist = (props) => {
 
-
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
     const label = ({cx, cy, midAngle, innerRadius, outerRadius, value, index}) => {
       const RADIAN = Math.PI / 180;
       // eslint-disable-next-line
@@ -26,7 +16,7 @@ const CommonArtist = (props) => {
         <text
           x={x}
           y={y}
-          fill={getRandomColor()}
+          fill={props.artists[index].color}
           textAnchor={x > cx ? "start" : "end"}
           dominantBaseline="central"
         >

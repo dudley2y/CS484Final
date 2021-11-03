@@ -14,6 +14,15 @@ const SpotifySearch = () => {
     const [tokens, setTokens] = useState()
     const [topArtists, setTopArtists] = useState([])
 
+    const getRandomColor = () => {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
     const getToken = () => {
 
         axios({
@@ -66,6 +75,7 @@ const SpotifySearch = () => {
                 let temp = {} 
                 temp["artist"] = artist
                 temp["count"] = artists[artist]
+                temp["color"] = getRandomColor()
                 setTopArtists( topArtists => [...topArtists, temp])
             }
         })
