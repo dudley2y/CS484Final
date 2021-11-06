@@ -3,7 +3,7 @@ import { Form, List, Grid  } from 'semantic-ui-react';
 import axios from 'axios'
 import SpotifySong from './SpotifySong'
 import SpotifyPlayer from 'react-spotify-web-playback';
-import CommonArtist from './CommonArtist';
+import CommonArtist from '../CommonArtist';
 const querystring = require('querystring');
 
 const SpotifySearch = () => {

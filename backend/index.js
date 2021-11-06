@@ -8,6 +8,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser');
 const sqlite3 = require("sqlite3");
 const querystring = require('querystring');
+// import axios from 'axios';
 
 const app = express();
 
@@ -268,10 +269,22 @@ app.get("/spotify_accessToken", (req, res) => {
 // Search Section
 
 app.post('/youtube_api_search', (req,res) => {
+    const YOUTUBE_API_KEY = 'AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM'
     const search_string = req.body.yt_search
+
     console.log("user searched for: ", search_string)
-    
-    res.send("sucess")
+    // axios.get({
+    //             url: 'https://www.googleapis.com/youtube/v3/',
+    //             method: "Get",
+    //             params: {
+    //                 part: 'snippet',
+    //                 maxResults: 5,
+    //                 key: YOUTUBE_API_KEY
+    //             }
+    //         }).then( res => {
+    //             setReponse(res.data)
+    //         })
+    // res.send("sucess")
 })
 
 app.listen(5000, () => {
