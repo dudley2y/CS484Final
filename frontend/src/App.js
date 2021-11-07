@@ -6,7 +6,7 @@ import Login from './componenets/Login'
 import AuthSpotify from './componenets/AuthSpotify'
 import HomePage from './componenets/HomePage';
 import AccountSettings from './componenets/AccountSettings';
-import SpotifySuccess from './componenets/SpotifySuccess';
+import SpotifySuccess from './componenets/Spotify/SpotifySuccess';
 
 function App() {
   return (
