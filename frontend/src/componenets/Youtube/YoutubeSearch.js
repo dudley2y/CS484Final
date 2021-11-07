@@ -1,71 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { Form, List, Grid  } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Form, List, Grid, Image  } from 'semantic-ui-react';
 import axios from 'axios'
-import YTSearch from 'youtube-api-search';
+// import YTSearch from 'youtube-api-search';
+// import YoutubeGetData from './YoutubeGetData'
 
 
 
 const YoutubeSearch = () => {
     const [response, setReponse] = useState("")
     const [search_params, setYoutubeSearch] = useState([])
-    const YOUTUBE_API_KEY = 'AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM'
+    const [songs, setSongs] = useState("")
+    const [currSongUri, setSongUri] = useState()
+
+
+    const YOUTUBE_API_KEY = 'AIzaSyALI-6Nyga6ee6vZOOsT_UM_lTjEush68E'
+    const default_url = 'https://www.googleapis.com/youtube/v3/search?';
+    const query = "q=" + search_params
+    const maxResultsString = "maxResults=";
+    const desiredMaxResults = "1"
+    const baseurl =  default_url + "part=snippet&key=" + YOUTUBE_API_KEY + "&" + maxResultsString + desiredMaxResults + "&" + query
 
 
         
     const search_triggered = () => {
         if(search_params){
-            fetch("https://www.googleapis.com/youtube/v3/search?q=cats", {
-                "method": "GET",
-                "headers": {
-                    "key": YOUTUBE_API_KEY
+            axios.get(baseurl, {
+                params: {
+                    
                 }
-            }).then(response=>{
-                console.log(response);
-            }).catch(err=>{
-                console.log(err)
-            })
+            }).then(function (api_response) {
+                var parsed = JSON.parse(response)
+                var video_id = parsed.data.id;
+                var snippet = parsed.data.snippet;
+                var title = snippet.title;
+                var description = snippet.description;
+                var thumbnail_url = snippet.thumbnails.url;
+                var thumbnail_width = snippet.thumbnails.height;
+                var thumbnail_height = snippet.thumbnails.height;
+                
+                
+                var api_resp = api_response;
+                var data = JSON.stringify(api_resp)
+                setReponse(data);
+                // console.log(response.items)
+                
+              }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        setReponse(error.response)
+                    }
+                });
+
+                // auth: {
+                //     key: YOUTUBE_API_KEY
+                //   },
+                // data: {
+                //     part: 'snippet',
+                //     key: YOUTUBE_API_KEY,
+                //     kind: "youtube#video",
+                //     id: "8YWrmZoUYGs&t=219s",
+                //     maxResults: 1
+                // }
+        }
+    }   
+
+    const objectJson = () => {
+        var arr = [];
+        for (var object in response){
+            console.log(object);
+            arr += object;
+        }
+        return{
+            arr
+        }
+
     }
-        //     axios({
-        //         url: 'https://www.googleapis.com/youtube/v3/search',
-        //         method: "Get",
-        //         params: {
-        //             part: 'snippet',
-        //             maxResults: 5,
-        //             key: YOUTUBE_API_KEY
-        //         }
-        //     }).then( res => {
-        //         setReponse(res.data)
-        //     }).catch( err => {
-        //         if(err.message === "Request failed with status code 401"){
-        //             setReponse("Failed login")
-        //         }
-        //         else{
-        //             setReponse(JSON.stringify(err))
-        //         }
-        //     })
     
-            // axios({
-            //     method: "get",
-            //     withCredentials: true,
-            //     url:"http://localhost:5000/youtube_api_search"
-            // }).then( res => {
-            //     setReponse(res.data)
-
-            // }).catch( err => {
-            //     if(err.message === "Request failed with status code 401"){
-            //         setReponse("Failed login")
-            //     }
-            //     else{
-            //         setReponse(JSON.stringify(err))
-            //     }
-            // })
-    // }
-
-    // YTSearch({key: YOUTUBE_API_KEY, search_params: search_params}, (videos) =>{
-    //     console.log(videos);
-
-    // })
-// }
     
     return(
         <div>

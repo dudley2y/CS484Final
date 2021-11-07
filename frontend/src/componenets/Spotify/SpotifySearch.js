@@ -31,7 +31,7 @@ const SpotifySearch = () => {
                 url:"http://localhost:5000/spotify_accessToken"
             }).then( res => {
                 setTokens()
-                if(res.data != "Error"){
+                if(res.data !== "Error"){
                     setTokens(res.data)
                 }
                 else{
