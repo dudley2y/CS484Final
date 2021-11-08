@@ -12,37 +12,41 @@ const YoutubeSearch = () => {
     const [songs, setSongs] = useState("")
     const [currSongUri, setSongUri] = useState()
 
-
-    const YOUTUBE_API_KEY = 'AIzaSyALI-6Nyga6ee6vZOOsT_UM_lTjEush68E'
+    const WATCH_URL = "https://www.youtube.com/watch?v=";
+    const YOUTUBE_API_KEY = 'AIzaSyALI-6Nyga6ee6vZOOsT_UM_lTjEush68E';
     const default_url = 'https://www.googleapis.com/youtube/v3/search?';
-    const query = "q=" + search_params
+    const query = "q=" + search_params;
     const maxResultsString = "maxResults=";
-    const desiredMaxResults = "1"
+    const desiredMaxResults = "1";
     const baseurl =  default_url + "part=snippet&key=" + YOUTUBE_API_KEY + "&" + maxResultsString + desiredMaxResults + "&" + query
 
 
         
     const search_triggered = () => {
         if(search_params){
+
+            axios({
+                url: baseurl,
+                method: 'GET'
+            }).then(res => {
+                console.log(res);
+                console.log(res.data.items[0])
+                // response.data.items.forEach(element => {
+                //     setSongs( songs => [...songs,<YoutubeSong name = {element.name} id = {element.id} uri = {element.uri} artist = {element.artists[0].name} key = {element.id} update = { setSongUri } imageSrc = {element.album.images[2].url} /> ])
+            })
+
+            /*
             axios.get(baseurl, {
                 params: {
                     
                 }
-            }).then(function (api_response) {
-                var parsed = JSON.parse(response)
-                var video_id = parsed.data.id;
-                var snippet = parsed.data.snippet;
-                var title = snippet.title;
-                var description = snippet.description;
-                var thumbnail_url = snippet.thumbnails.url;
-                var thumbnail_width = snippet.thumbnails.height;
-                var thumbnail_height = snippet.thumbnails.height;
-                
+            }).then( api_response =>  {
+
                 
                 var api_resp = api_response;
                 var data = JSON.stringify(api_resp)
                 setReponse(data);
-                // console.log(response.items)
+                console.log(response.items)
                 
               }).catch(function (error) {
                     if (error.response) {
@@ -62,19 +66,12 @@ const YoutubeSearch = () => {
                 //     id: "8YWrmZoUYGs&t=219s",
                 //     maxResults: 1
                 // }
+                */
         }
     }   
 
-    const objectJson = () => {
-        var arr = [];
-        for (var object in response){
-            console.log(object);
-            arr += object;
-        }
-        return{
-            arr
-        }
-
+    const sortData = () => {
+            
     }
     
     
