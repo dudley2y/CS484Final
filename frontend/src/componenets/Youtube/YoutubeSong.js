@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Form, List, Grid  } from 'semantic-ui-react';
-import axios from 'axios'
-import YTSearch from 'youtube-api-search';
+import React from 'react';
+import { List, Image } from 'semantic-ui-react'
 
-const youtubeSong = (props) => {
+const YoutubeSong = (props) => {
     return(
         <List.Item  onClick = { () => props.update(props.uri)}> 
             <Image src = {props.imageSrc}/>
             <List.Content>
                 <p>{props.name}</p> 
-                <p>{props.artist}</p>    
+                <p>{props.channel}</p>    
             </List.Content>
             
         </List.Item>
