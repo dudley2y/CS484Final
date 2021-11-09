@@ -163,6 +163,13 @@ app.post('/edit_username', (req,res) => {
                 const update_username_query = `UPDATE userLogin SET username = "${updated_username}" WHERE username ="${current_user}";`
                 db.run(update_username_query)
 
+                const update_username_inSpotify = `UPDATE spotifyData SET username = "${updated_username}" WHERE username ="${current_user}";`
+                db.run(update_username_inSpotify, (err) => {
+                    if(err){
+                        console.log(err)
+                    }
+                })
+
                 const user = { "username": updated_username, "password": req.user.password, "name": req.user.name}
                 req.logOut();
 
@@ -246,7 +253,7 @@ app.get("/spotify_accessToken", (req, res) => {
     })
 })
 
-cron.schedule("* * * * *", () => {
+cron.schedule("*/60 * * * *", () => {
     const getAllUsers = `SELECT * FROM spotifyData;`
 
     console.log("getting users")
