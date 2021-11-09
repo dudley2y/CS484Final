@@ -3,7 +3,7 @@ import { Form, List, Grid  } from 'semantic-ui-react';
 import axios from 'axios'
 import SpotifySong from './SpotifySong'
 import SpotifyPlayer from 'react-spotify-web-playback';
-import CommonArtist from './CommonArtist';
+import CommonArtist from '../CommonArtist';
 const querystring = require('querystring');
 
 const SpotifySearch = () => {
@@ -31,7 +31,7 @@ const SpotifySearch = () => {
                 url:"http://localhost:5000/spotify_accessToken"
             }).then( res => {
                 setTokens()
-                if(res.data != "Error"){
+                if(res.data !== "Error"){
                     setTokens(res.data)
                 }
                 else{

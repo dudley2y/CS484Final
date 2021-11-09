@@ -3,7 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from 'axios'
 import { Button } from 'semantic-ui-react'
-import SpotifySearch from './SpotifySearch';
+import SpotifySearch from './Spotify/SpotifySearch';
+import YoutubeSearch from './Youtube/YoutubeSearch';
 
 
 const HomePage= () => {
@@ -35,7 +36,7 @@ const HomePage= () => {
             return(<SpotifySearch/>)
         }
         else{
-            return(youtubeSearchAction)
+            return(<YoutubeSearch/>)
         }
 
     }
