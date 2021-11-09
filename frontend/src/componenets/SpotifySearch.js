@@ -60,8 +60,6 @@ const SpotifySearch = () => {
         }), headers)
         .then(response => 
             {
-                console.log("did i make this request over and over")
-                console.log(response)
                 setSongs([])
                 response.data.tracks.items.forEach(element => {
                     setSongs( songs => [...songs,<SpotifySong name = {element.name} id = {element.id} uri = {element.uri} artist = {element.artists[0].name} key = {element.id} update = { setSongUri } imageSrc = {element.album.images[2].url} /> ])
@@ -69,6 +67,7 @@ const SpotifySearch = () => {
             }).catch( err => {
                 setTokens()
                 getToken()
+                searchSpotifySongs(headers);
             })
     }
 

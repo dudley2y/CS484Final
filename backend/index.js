@@ -8,6 +8,9 @@ const session = require('express-session')
 const bodyParser = require('body-parser');
 const sqlite3 = require("sqlite3");
 const querystring = require('querystring');
+const cron = require('node-cron');
+const axios = require('axios');
+const { CLIENT_RENEG_WINDOW } = require("tls");
 
 const app = express();
 
@@ -243,27 +246,51 @@ app.get("/spotify_accessToken", (req, res) => {
     })
 })
 
-/* Code on frontend to refresh spotify token
-    const refreshTheToken = () => {
+cron.schedule("* * * * *", () => {
+    const getAllUsers = `SELECT * FROM spotifyData;`
 
-      let data = {
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-      };
+    console.log("getting users")
 
-      const headers = {
+    
+    const clientId = "426327bb47284651ba7d3aac5790edc1";
+    const clientSecret = "e418005aab42495587ced18596035912";
+    const headers = {
         headers:{
           Authorization: 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
         }
-      }
-
-      axios.post("https://accounts.spotify.com/api/token", querystring.stringify(data), headers).then( res => {
-        setToken(res.data.access_token)
-      })
     }
-*/
 
+    db.all(getAllUsers, (err,rows) => {
 
+        if(err){
+            return;
+        }
+
+        rows.forEach( row => {
+            refreshToken = row.refresh_token;
+
+            let data = {
+                grant_type: 'refresh_token',
+                refresh_token: refreshToken,
+            };
+
+            axios.post("https://accounts.spotify.com/api/token", querystring.stringify(data), headers).then( res => {
+
+                console.log("Current username: " + row.username)
+
+                const updateRefresh = `UPDATE spotifyData SET access_token = "${res.data.access_token}" WHERE username = "${row.username}"`;
+                console.log(updateRefresh)
+                db.run(updateRefresh, err => {
+                    if(err){
+                        console.log("database error: " + err)
+                    }
+                }) 
+            }).catch(err => {
+                console.log("Axios error " + err)
+            })
+        })
+    })
+})
 
 // Search Section
 
