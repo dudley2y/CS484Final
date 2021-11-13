@@ -26,6 +26,9 @@ expect(false).toBe(false)
 
 4. Test database inputs and changes to ensure stability of the database. Test user input into database and authenticate input.
 
+
+### ER Diagram
+![](./ER_Diagram.jpg)
 **Tools and resources:**
 
 [VSCode](https://code.visualstudio.com/)
