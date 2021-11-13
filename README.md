@@ -8,7 +8,7 @@
 
 
 ## Member Names:
-------------------
+-----------------
 Jacob Raffe 
 > (jraffe2) @jakeraffe
 
