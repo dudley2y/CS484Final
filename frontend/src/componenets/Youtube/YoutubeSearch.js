@@ -18,7 +18,7 @@ const YoutubeSearch = () => {
     const default_url = 'https://www.googleapis.com/youtube/v3/search?';
     const query = "q=" + search_params;
     const maxResultsString = "maxResults=";
-    const desiredMaxResults = "3";
+    const desiredMaxResults = "10";
     const baseurl =  default_url + "part=snippet&key=" + YOUTUBE_API_KEY + "&" + maxResultsString + desiredMaxResults + "&" + query
 
 
@@ -35,8 +35,8 @@ const YoutubeSearch = () => {
                 res.data.items.forEach(element => {
                     setSongs( songs => [...songs,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
                             uri = {WATCH_URL + element.id.videoId} channel = {element.snippet.channelTitle} 
-                            description = {element.snippet.description} key = {element.id.videoId} update = { setSongUri } 
-                            imageSrc = {element.snippet.thumbnails.default.url} /> ])
+                            description = {element.snippet.description} videoId = {element.id.videoId} update = { setSongUri } 
+                            imageSrc = {element.snippet.thumbnails.default.url} thumbnails = {element.snippet.thumbnails}/> ])
                 },
                 res.data.items.forEach(element =>{
                     console.log(element.id.videoId)
