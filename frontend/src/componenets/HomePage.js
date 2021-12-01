@@ -112,22 +112,23 @@ const HomePage= () => {
     return(
         <div>
             <Menu>
-                <Menu.Item header> 
+                <Menu.Item header position="left"> 
                     <h1>Welcome to our App {user.name}   {response}</h1>
+                </Menu.Item>
+                <Menu.Item style={{marginLeft:"-5%"}}></Menu.Item>
+                <Menu.Item position = "center" >
+                    <div >
+                        <Button.Group>
+                            <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
+                            <Button.Or />
+                            <Button positive = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
+                        </Button.Group>
+                    </div>
                 </Menu.Item>
                 <Menu.Item position = "right">
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
-            <div className="button_center">
-            <div align = "center">
-            <Button.Group>
-                <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
-                <Button.Or />
-                <Button positive = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
-            </Button.Group>
-            </div>
-        </div>
 
             {renderForm()}
         </div>

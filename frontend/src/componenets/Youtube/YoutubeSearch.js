@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, List, Grid, Image  } from 'semantic-ui-react';
 import axios from 'axios'
 import YoutubeSong from './YoutubeSong';
+import "../Styles/styles.css"
 // import YTSearch from 'youtube-api-search';
 // import YoutubeGetData from './YoutubeGetData'
 
@@ -65,20 +66,22 @@ const YoutubeSearch = () => {
     
     return(
         <div class="ui container">
-        <Form onSubmit={search_triggered}>
-            <Form.Group widths = "equal"> 
-                <Form.Input label = "Search Videos" type = "text" placeholder = "Search Youtube" name = "search_params" onChange = {(evt) => setYoutubeSearch(evt.target.value)}/> 
-            </Form.Group>
-            <Form.Button type = "submit">Search</Form.Button>
-        </Form>
-        <Grid>
-                <Grid.Row columns = {2}>
-                    <Grid.Column>
-                        <List divided verticalAlign='middle'>
-                            {songs}
-                        </List>
-                    </Grid.Column>
-                </Grid.Row>
+            <Form onSubmit={search_triggered}>
+                <Form.Group widths = "equal"> 
+                    <Form.Input label = "Search Videos" type = "text" placeholder = "Search Youtube" name = "search_params" onChange = {(evt) => setYoutubeSearch(evt.target.value)}/> 
+                </Form.Group>
+                <Form.Button type = "submit">Search</Form.Button>
+                <button class="ui inverted primary button">Primary</button>
+                <button class="ui inverted secondary button">Secondary</button>
+            </Form>
+            <Grid>
+                    <Grid.Row columns = {2}>
+                        <Grid.Column>
+                            <List divided verticalAlign='middle'>
+                                {songs}
+                            </List>
+                        </Grid.Column>
+                    </Grid.Row>
             </Grid>
     </div>
     )
