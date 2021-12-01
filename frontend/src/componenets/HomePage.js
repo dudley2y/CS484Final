@@ -5,6 +5,7 @@ import axios from 'axios'
 import { Button } from 'semantic-ui-react'
 import SpotifySearch from './Spotify/SpotifySearch';
 import YoutubeSearch from './Youtube/YoutubeSearch';
+import "./Styles/styles.css";
 
 
 const HomePage= () => {
@@ -118,11 +119,15 @@ const HomePage= () => {
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
+            <div className="button_center">
+            <div align = "center">
             <Button.Group>
                 <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
                 <Button.Or />
                 <Button positive = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
             </Button.Group>
+            </div>
+        </div>
 
             {renderForm()}
         </div>

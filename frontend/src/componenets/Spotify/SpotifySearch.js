@@ -120,7 +120,8 @@ const SpotifySearch = () => {
       }
 
     return(
-        <div>
+        <div class="ui container">
+
             <Form onSubmit={getToken}>
                 <Form.Group widths = "equal"> 
                     <Form.Input label = "Search" type = "text" placeholder = "Search Spotify" name = "spotify" onChange = {(evt) => setSearch(evt.target.value)}/> 

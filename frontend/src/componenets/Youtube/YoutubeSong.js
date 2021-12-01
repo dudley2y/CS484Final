@@ -9,16 +9,14 @@ const YoutubeSong = (props) => {
     const width = thumbnail.width
     const src = thumbnail.url
     const player_url = youtube_base + props.videoId
-    console.log("key", props.videoId)
+    // console.log("key", props.videoId)
     // <Image width={width} height={height} src={src} alt=""/>
     return(
         <List.Item  onClick = { () => props.update(props.uri)}> 
             <List.Content>
                 <div className="player">
-                    <ReactPlayer url={player_url}
-                    // playing
-                    width={width}
-                    height={height}
+                    <ReactPlayer url={player_url} 
+                    light={true}
                     controls={true}
                     />
                 </div>
