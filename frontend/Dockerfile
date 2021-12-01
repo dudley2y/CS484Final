@@ -1,7 +1,7 @@
 FROM node:14.18.1
 
 LABEL version="1.0"
-LABEL description="Backend Image"
+LABEL description="Frontend Image"
 LABEL maintainer = "jacobvraffe@gmail.com"
 
 # RUN mkdir -p /client

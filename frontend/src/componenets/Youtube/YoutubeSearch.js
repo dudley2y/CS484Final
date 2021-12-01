@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Form, List, Grid, Image  } from 'semantic-ui-react';
+import { Form, List, Grid, Image, Button } from 'semantic-ui-react';
 import axios from 'axios'
 import YoutubeSong from './YoutubeSong';
+import "../Styles/styles.css"
 // import YTSearch from 'youtube-api-search';
 // import YoutubeGetData from './YoutubeGetData'
 
@@ -9,7 +10,10 @@ import YoutubeSong from './YoutubeSong';
 
 const YoutubeSearch = () => {
     const [response, setReponse] = useState("")
-    const [search_params, setYoutubeSearch] = useState([])
+    const [searchVideo, setSearchVideo] = useState("")
+    const [searchChannel, setSearchChannel] = useState("")
+    const [intent, setIntent] = useState('Search Video');
+    const [search_params, setYoutubeSearchVideo] = useState([])
     const [songs, setSongs] = useState([])
     const [currSongUri, setSongUri] = useState()
     
@@ -19,8 +23,9 @@ const YoutubeSearch = () => {
     const default_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=' + YOUTUBE_API_KEY + "&";
     const query = "q=" + search_params;
     const maxResultsString = "maxResults=";
-    const desiredMaxResults = "2";
+    const desiredMaxResults = "1";
     const baseurl_video =  default_url + maxResultsString + desiredMaxResults + "&type=video&" + query
+    const baseurl_channel =  default_url + maxResultsString + desiredMaxResults + "&type=channel&" + query
 
 
     
@@ -28,9 +33,10 @@ const YoutubeSearch = () => {
         setSongs([])
         res.data.items.forEach(element => {
             setSongs( songs => [...songs,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
-                    uri = {WATCH_URL + element.id.videoId} channel = {element.snippet.channelTitle} 
-                    description = {element.snippet.description} videoId = {element.id.videoId} update = { setSongUri } 
-                    imageSrc = {element.snippet.thumbnails.default.url} thumbnails = {element.snippet.thumbnails}/> ])
+                    uri = {WATCH_URL + element.id.videoId} channelTitle = {element.snippet.channelTitle} intent = {intent}
+                    channelID = {element.snippet.channelId} videoId = {element.id.videoId} update = { setSongUri } 
+                    description = {element.snippet.description} imageSrc = {element.snippet.thumbnails}
+                    thumbnails = {element.snippet.thumbnails}/>])
         },
         res.data.items.forEach(element =>{
             if(element.id.videoId){
@@ -45,40 +51,74 @@ const YoutubeSearch = () => {
     }
     const search_triggered = () => {
         if(search_params){
-
-            axios({
-                url: baseurl_video,
-                method: 'GET'
-            }).then(res => {
-                parse_search(res);
-                console.log(res);
-            }).catch( err => {
-                console.log(err)
-            })
+            if (intent === "Search Video"){
+                axios({
+                    url: baseurl_video,
+                    method: 'GET'
+                }).then(res => {
+                    parse_search(res);
+                    console.log(res);
+                }).catch( err => {
+                    console.log(err)
+                })
+            }
+            if (intent === "Search Channel"){
+                axios({
+                    url: baseurl_channel,
+                    method: 'GET'
+                }).then(res => {
+                    parse_search(res);
+                    console.log(res);
+                }).catch( err => {
+                    console.log(err)
+                })
+            }
         }
     }   
 
-    const sortData = () => {
+    // Determines whether the user wants to search for videos or channels. Sets state.
+    const handleChange = (event, intent) => {
+        setIntent(intent);
+
+        if(intent === "Search Video"){
+            setSearchVideo(true)
+            setSearchChannel(false)
+        }
+        else{
+            setSearchVideo(false)
+            setSearchChannel(true)
+        }
+    }
+
+    const handleSearch = (value) => {
+        if(setSearchVideo){
+            setYoutubeSearchVideo(value)
+        }
+        else if(setSearchChannel){
             
+        }
     }
     
     
     return(
         <div class="ui container">
-        <Form onSubmit={search_triggered}>
-            <Form.Group widths = "equal"> 
-                <Form.Input label = "Search Videos" type = "text" placeholder = "Search Youtube" name = "search_params" onChange = {(evt) => setYoutubeSearch(evt.target.value)}/> 
-            </Form.Group>
-            <Form.Button type = "submit">Search</Form.Button>
-        </Form>
-        <Grid>
-                <Grid.Row columns = {2}>
-                    <Grid.Column>
-                        <List divided verticalAlign='middle'>
-                            {songs}
-                        </List>
-                    </Grid.Column>
-                </Grid.Row>
+            <Form onSubmit={search_triggered}>
+            <Grid style={{paddingTop:"2em", paddingBottom:"2em", marginLeft:"1px"}}>
+                <Button inverted primary button type = {searchVideo} onClick={ (event) => handleChange(event, "Search Video") } style={{marginRight:"2em"}}>Search For Video</Button>
+                <Button inverted secondary button type = {searchChannel} onClick={ (event) => handleChange(event, "Search Channel") } >Search For Channel</Button>
+            </Grid>
+                <Form.Group widths = "equal"> 
+                    <Form.Input type = "text" placeholder = "Search Youtube" name = "search_params" onChange = {(evt) => handleSearch(evt.target.value)}/> 
+                </Form.Group>
+            </Form>
+            <Grid>
+                    <Grid.Row columns = {2}>
+                        <Grid.Column>
+                            <List divided verticalAlign='middle'>
+                                {songs}
+                            </List>
+                        </Grid.Column>
+                    </Grid.Row>
             </Grid>
     </div>
     )
