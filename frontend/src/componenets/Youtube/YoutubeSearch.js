@@ -33,9 +33,10 @@ const YoutubeSearch = () => {
         setSongs([])
         res.data.items.forEach(element => {
             setSongs( songs => [...songs,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
-                    uri = {WATCH_URL + element.id.videoId} channel = {element.snippet.channelTitle} 
-                    description = {element.snippet.description} videoId = {element.id.videoId} update = { setSongUri } 
-                    imageSrc = {element.snippet.thumbnails.default.url} thumbnails = {element.snippet.thumbnails}/>])
+                    uri = {WATCH_URL + element.id.videoId} channelTitle = {element.snippet.channelTitle} intent = {intent}
+                    channelID = {element.snippet.channelId} videoId = {element.id.videoId} update = { setSongUri } 
+                    description = {element.snippet.description} imageSrc = {element.snippet.thumbnails}
+                    thumbnails = {element.snippet.thumbnails}/>])
         },
         res.data.items.forEach(element =>{
             if(element.id.videoId){
