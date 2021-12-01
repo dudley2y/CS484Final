@@ -121,7 +121,7 @@ const HomePage= () => {
                         <Button.Group>
                             <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
                             <Button.Or />
-                            <Button positive = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
+                            <Button negative = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
                         </Button.Group>
                     </div>
                 </Menu.Item>
