@@ -129,7 +129,6 @@ const HomePage= () => {
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
-
             {renderForm()}
         </div>
     )

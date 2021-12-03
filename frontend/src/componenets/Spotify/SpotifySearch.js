@@ -4,6 +4,7 @@ import axios from 'axios'
 import SpotifySong from './SpotifySong'
 import SpotifyPlayer from 'react-spotify-web-playback';
 import CommonArtist from './CommonArtist';
+import "../Styles/styles.css"
 const querystring = require('querystring');
 
 const SpotifySearch = () => {
@@ -115,18 +116,19 @@ const SpotifySearch = () => {
           return <h1>Player needs token</h1>
         }
         else{ 
-          return <h1>Needs Song Uri</h1>
+          return <h1></h1>
         }
       }
 
     return(
-        <div class="ui container">
+        <div style={{marginLeft:"9%", marginRight:"9%"}}>
 
             <Form onSubmit={getToken}>
                 <Form.Group widths = "equal"> 
-                    <Form.Input label = "Search" type = "text" placeholder = "Search Spotify" name = "spotify" onChange = {(evt) => setSearch(evt.target.value)}/> 
+                    <Form.Input label = "Search" type = "text" placeholder = "Search Spotify" 
+                    name = "spotify" onChange = {(evt) => setSearch(evt.target.value)}/> 
                 </Form.Group>
-                <Form.Button type = "submit">Search</Form.Button>
+                <Form.Button type = "submit" style={{marginBottom:"1em"}} >Search</Form.Button>
             </Form>  
             <Grid>
                 <Grid.Row columns = {2}>
