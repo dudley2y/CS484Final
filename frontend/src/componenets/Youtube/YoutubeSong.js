@@ -16,33 +16,33 @@ const YoutubeSong = (props) => {
     const channel_url = youtube_base + "channel/" + props.channelID
     // onClick = { () => props.update(props.uri)}
     const typeDetermination = () => {
+        // <Grid columns={4} className="bar"
+        //                         style={{width:"99.9%", height:"14%", marginTop:"-1px", marginLeft:".05%"}} >
+        //                         <Grid.Row celled>
+        //                         <Grid.Column></Grid.Column>
+        //                             <Grid.Column>
+        //                                 <Button type="submit" name="playlist-button" class="ui submit button">
+        //                                     <img src={playlist} alt=""/>
+        //                                 </Button>
+        //                             </Grid.Column>
+        //                             <Grid.Column>
+        //                             <Button type="submit" name="heart-button" class="ui submit button"
+        //                             onClick = { () => props.update("Bro")}>
+        //                                 <img src={playlist} alt=""/>
+        //                             </Button>
+        //                             </Grid.Column>
+        //                             <Grid.Column style={{paddingTop:"3em"}}>
+        //                             </Grid.Column>
+        //                         </Grid.Row>
+        //                     </Grid>
         if (props.intent === "Search Video"){
             return(
                 <div>
-                    <List.Item > 
-                        <List.Content >
+                    <List.Item style={{marginTop:"1em"}}> 
+                        <List.Content>
                                 <ReactPlayer url={player_url} style={{width:"100%"}} 
                                     light={false} 
                                     controls={true} />
-                            <Grid columns={4} className="bar"
-                                style={{width:"99.9%", height:"14%", marginTop:"-1px", marginLeft:".05%"}} >
-                                <Grid.Row celled>
-                                <Grid.Column></Grid.Column>
-                                    <Grid.Column>
-                                        <Button type="submit" name="playlist-button" class="ui submit button">
-                                            <img src={playlist} alt=""/>
-                                        </Button>
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                    <Button type="submit" name="heart-button" class="ui submit button"
-                                    onClick = { () => props.update("Bro")}>
-                                        <img src={playlist} alt=""/>
-                                    </Button>
-                                    </Grid.Column>
-                                    <Grid.Column style={{paddingTop:"3em"}}>
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
                         </List.Content>
                     </List.Item>
                 </div>
@@ -50,10 +50,10 @@ const YoutubeSong = (props) => {
         }
         else{
             // <Image size="medium" circular src={thumbnail.medium.url}/>
-            console.log("Channel url:", channel_url, "Image:", thumbnail)
+            console.log("Channel Id:", props.channelID)
             return(
                 <div>
-                    <List.Item> 
+                    <List.Item onClick = { () => props.updateChannel(props.channelID)}> 
                         <Grid columns={2} width="100%">
                             <Grid.Row celled>
                                 <Grid.Column left five wide column style={{paddingTop:"1em"}}>

@@ -4,6 +4,7 @@ import axios from 'axios'
 import YoutubeSong from './YoutubeSong';
 import "../Styles/styles.css"
 import YoutubePlaylist from './YoutubePlaylist'
+import YoutubeChannelList from './YoutubeChannelList'
 import YouTubePlayer from 'react-player/youtube';
 // import YTSearch from 'youtube-api-search';
 // import YoutubeGetData from './YoutubeGetData'
@@ -17,16 +18,20 @@ const YoutubeSearch = () => {
     const [intent, setIntent] = useState('Search Video');
     const [search_params, setYoutubeSearchVideo] = useState([])
     const [videos, setvideos] = useState([])
-    const [currChannelUri, setChannelUri] = useState([])
+    const [channelVideoList, setChannelVideoList] = useState([])
+    const [currChannelId, setChannelId] = useState()
     const [currSongUrl, setSongUri] = useState()
-    
+    const [currChannelName, setCurrChannelName] = useState()
+
 // ?key={your_key_here}&channelId={channel_id_here}&part=snippet,id&order=date&maxResults=20
     const WATCH_URL = "https://www.youtube.com/watch?v=";
     const YOUTUBE_API_KEY = 'AIzaSyDKmSJpeUk029A3eJfRD-tgefJ9D4XFF7I';
     const default_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=' + YOUTUBE_API_KEY + "&";
+    const default_channel_url = "https://www.googleapis.com/youtube/v3/search?key=" + YOUTUBE_API_KEY + 
+                                "&part=snippet,id&order=date&maxResults=5&channelId="
     const query = "q=" + search_params;
     const maxResultsString = "maxResults=";
-    const desiredMaxResults = "1";
+    const desiredMaxResults = "2";
     const baseurl_video =  default_url + maxResultsString + desiredMaxResults + "&type=video&" + query
     const baseurl_channel =  default_url + maxResultsString + desiredMaxResults + "&type=channel&" + query
 
@@ -38,7 +43,7 @@ const YoutubeSearch = () => {
             setvideos( videos => [...videos,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
                     uri = {WATCH_URL + element.id.videoId} channelTitle = {element.snippet.channelTitle} intent = {intent}
                     channelID = {element.snippet.channelId} videoId = {element.id.videoId} update = { setSongUri } 
-                    description = {element.snippet.description} imageSrc = {element.snippet.thumbnails} updateChannel = {setChannelUri}
+                    description = {element.snippet.description} imageSrc = {element.snippet.thumbnails} updateChannel = {setChannelId}
                     thumbnails = {element.snippet.thumbnails}/>])
         },
         res.data.items.forEach(element =>{
@@ -53,32 +58,50 @@ const YoutubeSearch = () => {
         
     }
     // search a list of videos on that channel
-    const parse_channel = (response) => {
+    // const parse_channel = (response) => {
 
-        var channelArray = []
-        response.data.items.forEach(element => {
-            channelArray.push(element.snippet.channelId)
-        })
-        for(var channel_id in channelArray) {
+    //     var channelArray = []
+    //     response.data.items.forEach(element => {
+    //         channelArray.push(element.snippet.channelId)
+    //     })
+    //     for(var channel_id in channelArray) {
+    //         axios({
+    //             url: baseurl_channel,
+    //             method: 'GET'
+    //         }).then(res => {
+    //             res.data.items.forEach(element => {
+    //                 setvideos( videos => [...videos,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
+    //                         uri = {WATCH_URL + element.id.videoId} channelTitle = {element.snippet.channelTitle} intent = {intent}
+    //                         channelID = {element.snippet.channelId} videoId = {element.id.videoId} update = { setSongUri } 
+    //                         description = {element.snippet.description} imageSrc = {element.snippet.thumbnails} 
+    //                         liveBroadcastContent = {element.snippet.liveBroadcastContent} videoTitle = {element.snippet.title}
+    //                         thumbnails = {element.snippet.thumbnails}/>])
+    //             })
+    //             console.log(res);
+    //         }).catch( err => {
+    //             console.log(err)
+    //         })
+    //     }
+    // }
+    const displayChannelList = () =>{
+        if("Curr Channel ID:", currChannelId){
+            console.log(currChannelId)
+            var url = default_channel_url + {currChannelId}
             axios({
-                url: baseurl_channel,
+                url: url,
                 method: 'GET'
             }).then(res => {
+                // parse_video_details(res);
                 res.data.items.forEach(element => {
-                    setvideos( videos => [...videos,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
-                            uri = {WATCH_URL + element.id.videoId} channelTitle = {element.snippet.channelTitle} intent = {intent}
-                            channelID = {element.snippet.channelId} videoId = {element.id.videoId} update = { setSongUri } 
-                            description = {element.snippet.description} imageSrc = {element.snippet.thumbnails} 
-                            liveBroadcastContent = {element.snippet.liveBroadcastContent} videoTitle = {element.snippet.title}
-                            thumbnails = {element.snippet.thumbnails}/>])
+                    setvideos( videos => [...videos,<YoutubeChannelList name = {currChannelName} />])
                 })
-                console.log(res);
+                console.log("Found these videos for the channel:", currChannelName);
             }).catch( err => {
                 console.log(err)
             })
         }
-    }
-
+      }
+      
     const search_triggered = () => {
         if(search_params){
             if (intent === "Search Video"){
@@ -132,15 +155,6 @@ const YoutubeSearch = () => {
         }
     }
     
-    const displayPlaylist = () => {
-        if (currSongUrl){
-            return  <YoutubePlaylist url={currSongUrl}/> 
-        }
-        // else{
-        //     return  <YoutubePlaylist/> 
-        // }
-    }
-
     return(
         <div style={{marginLeft:"9%", marginRight:"9%"}}>
             <Form onSubmit={search_triggered}>
@@ -161,7 +175,8 @@ const YoutubeSearch = () => {
                     </Grid.Column>
                     <Grid.Column>
                         <Grid>
-                            <Grid.Row style={{marginRight: "500px"}}>{displayPlaylist()}</Grid.Row>
+                            {/* <Grid.Row style={{marginRight: "500px"}}>{displayPlaylist()}</Grid.Row> */}
+                            <Grid.Row style={{marginRight: "20px"}}>{displayChannelList()}</Grid.Row>
                         </Grid>      
                     </Grid.Column>
                 </Grid.Row>
