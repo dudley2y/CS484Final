@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Form, List, Grid  } from 'semantic-ui-react';
+import { Form, List, Grid, Dropdown, Button, Table } from 'semantic-ui-react';
 import axios from 'axios'
 import SpotifySong from './SpotifySong'
+import SpotifyPlaylist from './SpotifyPlaylist'
 import SpotifyPlayer from 'react-spotify-web-playback';
 import CommonArtist from './CommonArtist';
 import "../Styles/styles.css"
@@ -14,6 +15,13 @@ const SpotifySearch = () => {
     const [currSongUri, setSongUri] = useState()
     const [tokens, setTokens] = useState()
     const [topArtists, setTopArtists] = useState([])
+    const [displayRecentSongs, setSearchVideo] = useState()
+    const [displayPlaylists, setdisplayPlaylists] = useState()
+    const [playlists, setPlaylists] = useState([])
+    const [intent, setIntent] = useState("View Recent Artists")
+    const [playlistImages, setPlaylistImages] = useState([])
+    const [recentArtistSelected, setRecentArtistSelected] = useState(true)
+    const [playlistSelected, setPlaylistSelected] = useState(false)
 
     const getRandomColor = () => {
         var letters = '0123456789ABCDEF';
@@ -78,7 +86,7 @@ const SpotifySearch = () => {
             console.log(res)
 
             setTopArtists([])
-
+            console.log("songs", res)
             let artists = {} 
             res.data.items.forEach( element => {
                 const currArtist = element.track.artists[0].name
@@ -95,6 +103,24 @@ const SpotifySearch = () => {
         })
     }
 
+    const getUserPlaylists = (headers) =>{
+        axios.get("https://api.spotify.com/v1/me/playlists", headers).then( res => {
+
+            console.log("Playlists", res)
+
+            setPlaylists([])
+            // data.items.images[0].url
+            // 
+            let playlists = {} 
+            res.data.items.forEach(element => {
+                setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} 
+                    tracks = {element.tracks}/>])
+            })
+            console.log(res.data.items.name)
+        })
+    }
+
+    
     useEffect( () => {
         if(tokens){
             const headers = {
@@ -105,6 +131,7 @@ const SpotifySearch = () => {
             };
             searchSpotifySongs(headers)
             getUsersRecentSongs(headers)
+            getUserPlaylists(headers)
         }
     }, [tokens])
 
@@ -113,13 +140,38 @@ const SpotifySearch = () => {
            return  <SpotifyPlayer token={tokens} uris={currSongUri} autoPlay = {true} /> 
         }
         else if(!tokens){
-          return <h1>Player needs token</h1>
+          return <h1>Please select a song</h1>
         }
         else{ 
           return <h1></h1>
         }
       }
 
+    const handleChange = (event, intent) => {
+        setIntent(intent);
+
+        if(intent === "View Recent Artists"){
+            setRecentArtistSelected(true)
+            setPlaylistSelected(false)
+            console.log("hello")
+        }
+        else{
+            setRecentArtistSelected(true)
+            setPlaylistSelected(false)
+            console.log("goodbye")
+        }
+    }
+    const displayChart = () =>{
+        console.log(intent)
+        if(intent === "View Recent Artists"){
+            return(
+                <CommonArtist artists = {topArtists}/> 
+            )
+        }
+        return (
+            <SpotifyPlaylist/>
+        )
+    }
     return(
         <div style={{marginLeft:"9%", marginRight:"9%"}}>
 
@@ -128,7 +180,20 @@ const SpotifySearch = () => {
                     <Form.Input label = "Search" type = "text" placeholder = "Search Spotify" 
                     name = "spotify" onChange = {(evt) => setSearch(evt.target.value)}/> 
                 </Form.Group>
-                <Form.Button type = "submit" style={{marginBottom:"1em"}} >Search</Form.Button>
+                <Grid>
+                    <Grid.Row columns = {2}>
+                        <Grid.Column>
+                            <Form.Button type = "submit" style={{marginBottom:"1em"}} >Search</Form.Button>
+                        </Grid.Column>
+                        <Grid.Column style={{paddingLeft:"13%"}}>
+                            <Button.Group>
+                                <Button positive = {recentArtistSelected} onClick={ (event) => handleChange(event, "View Recent Artists") } >View Recent Artists</Button>
+                                <Button.Or />
+                                <Button negative = {playlistSelected} onClick={ (event) => handleChange(event, "View Playlist") }> View Playlist</Button>
+                            </Button.Group>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </Form>  
             <Grid>
                 <Grid.Row columns = {2}>
@@ -139,13 +204,12 @@ const SpotifySearch = () => {
                     </Grid.Column>
                     <Grid.Column>
                         <Grid>
-                            <Grid.Row style={{height: "390px"}} ><CommonArtist artists = {topArtists} /> </Grid.Row>
+                            <Grid.Row style={{height: "390px"}}>{displayChart()}</Grid.Row>
                             <Grid.Row style={{marginRight: "20px"}}>{displaySpotify()}</Grid.Row>
                         </Grid>      
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
-            
         </div>
     )
 

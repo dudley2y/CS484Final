@@ -305,31 +305,31 @@ cron.schedule("*/60 * * * *", () => {
 
 app.get("/youtube_playlist_search", (req, res) => {
 
-    db.get(`SELECT username FROM youtubeUserInfo WHERE username="floop";`, (err, row) => {
-        if(row){
-            // var song_list;
-            // var artist_list
-            // db.get(`SELECT * FROM youtubeSongs WHERE playlist_id="?"`, [row.playlist_id], (err, row) => {
-            //     if(err){
-            //         res.send(err);
-            //     }
-            //     else{
-            //         song_list = row.song_name;
-            //         artist_list = row.artist_name;
-            //     }
-            // });
-            // res.send(row.username)
-        }
-        else{
-            console.log(err)
-            if(err){
-                res.send(err)
-            }
-            else{
-                res.send("Error")
-            }
-        }
-    })
+    // db.get(`SELECT username FROM youtubeUserInfo WHERE username="floop";`, (err, row) => {
+    //     if(row){
+    //         // var song_list;
+    //         // var artist_list
+    //         // db.get(`SELECT * FROM youtubeSongs WHERE playlist_id="?"`, [row.playlist_id], (err, row) => {
+    //         //     if(err){
+    //         //         res.send(err);
+    //         //     }
+    //         //     else{
+    //         //         song_list = row.song_name;
+    //         //         artist_list = row.artist_name;
+    //         //     }
+    //         // });
+    //         // res.send(row.username)
+    //     }
+    //     else{
+    //         console.log(err)
+    //         if(err){
+    //             res.send(err)
+    //         }
+    //         else{
+    //             res.send("Error")
+    //         }
+    //     }
+    // })
 })
 
 app.listen(5000, () => {

@@ -41,33 +41,6 @@ const HomePage= () => {
         }
 
     }
-    
-    const youtubeSearchAction = (event) =>{
-        if(yt_search){
-            axios({
-                method: "post",
-                data: {
-                    yt_search: yt_search
-                },
-                withCredentials: true,
-                url:"http://localhost:5000/youtube_api_search"
-                
-            }).then( res => {
-                setReponse(res.data)
-
-            }).catch( err => {
-                if(err.message === "Request failed with status code 401"){
-                    setReponse("Failed search lookup")
-                }
-                else{
-                    setReponse(JSON.stringify(err))
-                }
-            })
-        }
-        else{
-            console.log("No search sent")
-        }
-    }
 
 
     // Account information Dropdown
