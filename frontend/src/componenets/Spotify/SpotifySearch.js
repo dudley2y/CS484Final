@@ -106,17 +106,19 @@ const SpotifySearch = () => {
     const getUserPlaylists = (headers) =>{
         axios.get("https://api.spotify.com/v1/me/playlists", headers).then( res => {
 
-            console.log("Playlists", res)
+            console.log("Playlist Objects", res)
 
             setPlaylists([])
             // data.items.images[0].url
             // 
-            let playlists = {} 
             res.data.items.forEach(element => {
-                setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} 
-                    tracks = {element.tracks}/>])
+                console.log(element.name)
+                setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} /> ])
+                // setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} 
+                //     tracks = {element.tracks.total} description = {element.description}/>])
             })
-            console.log(res.data.items.name)
+        }).catch( err => {
+            console.log(err)
         })
     }
 
@@ -140,7 +142,7 @@ const SpotifySearch = () => {
            return  <SpotifyPlayer token={tokens} uris={currSongUri} autoPlay = {true} /> 
         }
         else if(!tokens){
-          return <h1>Please select a song</h1>
+          return <h1>Needs a valid token.</h1>
         }
         else{ 
           return <h1></h1>
@@ -162,15 +164,16 @@ const SpotifySearch = () => {
         }
     }
     const displayChart = () =>{
-        console.log(intent)
-        if(intent === "View Recent Artists"){
-            return(
-                <CommonArtist artists = {topArtists}/> 
+        if(tokens){
+            if(intent === "View Recent Artists"){
+                return(
+                    <CommonArtist artists = {topArtists}/> 
+                )
+            }
+            return (
+                <SpotifyPlaylist/>
             )
         }
-        return (
-            <SpotifyPlaylist/>
-        )
     }
     return(
         <div style={{marginLeft:"9%", marginRight:"9%"}}>

@@ -26,7 +26,7 @@ const YoutubeSearch = () => {
     const default_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=' + YOUTUBE_API_KEY + "&";
     const query = "q=" + search_params;
     const maxResultsString = "maxResults=";
-    const desiredMaxResults = "1";
+    const desiredMaxResults = "10";
     const baseurl_video =  default_url + maxResultsString + desiredMaxResults + "&type=video&" + query
     const baseurl_channel =  default_url + maxResultsString + desiredMaxResults + "&type=channel&" + query
 
