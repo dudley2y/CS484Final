@@ -90,7 +90,7 @@ const HomePage= () => {
                 </Menu.Item>
                 <Menu.Item style={{marginLeft:"-5%"}}></Menu.Item>
                 <Menu.Item position = "center" >
-                    <div >
+                    <div>
                         <Button.Group>
                             <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
                             <Button.Or />

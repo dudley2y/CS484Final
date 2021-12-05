@@ -33,7 +33,8 @@ const Login = () => {
     
 
     return(
-        <div style = {{width: "50%", marginLeft: "auto", marginRight: "auto", paddingRight: "1em"}}>
+        <div style = {{width: "50%", marginLeft: "auto", marginRight: "auto", marginTop: "10px", 
+                        paddingRight: "1em"}}>
             <div align = "center">
                 <Button.Group>
                     <Button positive = {signupIsPositive} onClick={ (event) => handleChange(event, "Sign up") } >Sign up</Button>

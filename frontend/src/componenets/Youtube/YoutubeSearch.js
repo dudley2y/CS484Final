@@ -25,10 +25,9 @@ const YoutubeSearch = () => {
 
 // ?key={your_key_here}&channelId={channel_id_here}&part=snippet,id&order=date&maxResults=20
     const WATCH_URL = "https://www.youtube.com/watch?v=";
-    const YOUTUBE_API_KEY = 'AIzaSyDKmSJpeUk029A3eJfRD-tgefJ9D4XFF7I';
+    const YOUTUBE_API_KEY = 'AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM';
     const default_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=' + YOUTUBE_API_KEY + "&";
-    const default_channel_url = "https://www.googleapis.com/youtube/v3/search?key=" + YOUTUBE_API_KEY + 
-                                "&part=snippet,id&order=date&maxResults=5&channelId="
+    const default_channel_url = "https://www.googleapis.com/youtube/v3/search?key=" + YOUTUBE_API_KEY + "&part=snippet&maxResults=1&channelId="
     const query = "q=" + search_params;
     const maxResultsString = "maxResults=";
     const desiredMaxResults = "2";
@@ -85,15 +84,15 @@ const YoutubeSearch = () => {
     // }
     const displayChannelList = () =>{
         if("Curr Channel ID:", currChannelId){
-            console.log(currChannelId)
-            var url = default_channel_url + {currChannelId}
+            console.log("Channel url:", default_channel_url + currChannelId)
+            var url = default_channel_url + currChannelId
             axios({
                 url: url,
                 method: 'GET'
             }).then(res => {
                 // parse_video_details(res);
                 res.data.items.forEach(element => {
-                    setvideos( videos => [...videos,<YoutubeChannelList name = {currChannelName} />])
+                    setChannelVideoList( channelVideoList => [...channelVideoList,<YoutubeChannelList name = {currChannelName} />])
                 })
                 console.log("Found these videos for the channel:", currChannelName);
             }).catch( err => {
