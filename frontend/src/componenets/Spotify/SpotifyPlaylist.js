@@ -1,8 +1,8 @@
 import React from 'react';
-import { List, Image, Table } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 
 const SpotifyPlaylist = (props) => {
-    console.log("Printing name:", props.name)
+    console.log("Printing name:", props)
     return(
         <Table ui celled table>
             <Table.Header>

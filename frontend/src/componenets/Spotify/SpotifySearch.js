@@ -71,7 +71,9 @@ const SpotifySearch = () => {
             {
                 setSongs([])
                 response.data.tracks.items.forEach(element => {
-                    setSongs( songs => [...songs,<SpotifySong name = {element.name} id = {element.id} uri = {element.uri} artist = {element.artists[0].name} key = {element.id} update = { setSongUri } imageSrc = {element.album.images[2].url} /> ])
+                    setSongs( songs => [...songs,<SpotifySong name = {element.name} id = {element.id} uri = {element.uri} 
+                        artist = {element.artists[0].name} key = {element.id} update = { setSongUri } 
+                        imageSrc = {element.album.images[2].url} /> ])
                 })
             }).catch( err => {
                 setTokens()
@@ -109,17 +111,18 @@ const SpotifySearch = () => {
             console.log("Playlist Objects", res)
 
             setPlaylists([])
-            // data.items.images[0].url
-            // 
             res.data.items.forEach(element => {
                 console.log(element.name)
-                setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} /> ])
-                // setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} 
-                //     tracks = {element.tracks.total} description = {element.description}/>])
+                setPlaylists( playlists => [...playlists,<SpotifyPlaylist name = {element.name} image = {element.images[0].url} 
+                    tracks = {element.tracks.total} description = {element.description}/>])
             })
         }).catch( err => {
-            console.log(err)
+            // console.log(err)
+            setTokens()
+            getToken()
+            getUserPlaylists(headers);
         })
+        console.log(playlists);
     }
 
     
@@ -155,12 +158,10 @@ const SpotifySearch = () => {
         if(intent === "View Recent Artists"){
             setRecentArtistSelected(true)
             setPlaylistSelected(false)
-            console.log("hello")
         }
         else{
             setRecentArtistSelected(true)
             setPlaylistSelected(false)
-            console.log("goodbye")
         }
     }
     const displayChart = () =>{
