@@ -24,7 +24,6 @@ const YoutubeSearch = () => {
     const [currChannelName, setCurrChannelName] = useState()
     const [channelVideoCache, setChannelVideoCache] = useState({})
 
-// ?key={your_key_here}&channelId={channel_id_here}&part=snippet,id&order=date&maxResults=20
     const WATCH_URL = "https://www.youtube.com/watch?v=";
         // old api key = AIzaSyDKmSJpeUk029A3eJfRD-tgefJ9D4XFF7I
     const YOUTUBE_API_KEY = "AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM";
