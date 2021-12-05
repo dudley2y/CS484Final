@@ -41,33 +41,6 @@ const HomePage= () => {
         }
 
     }
-    
-    const youtubeSearchAction = (event) =>{
-        if(yt_search){
-            axios({
-                method: "post",
-                data: {
-                    yt_search: yt_search
-                },
-                withCredentials: true,
-                url:"http://localhost:5000/youtube_api_search"
-                
-            }).then( res => {
-                setReponse(res.data)
-
-            }).catch( err => {
-                if(err.message === "Request failed with status code 401"){
-                    setReponse("Failed search lookup")
-                }
-                else{
-                    setReponse(JSON.stringify(err))
-                }
-            })
-        }
-        else{
-            console.log("No search sent")
-        }
-    }
 
 
     // Account information Dropdown
@@ -117,7 +90,7 @@ const HomePage= () => {
                 </Menu.Item>
                 <Menu.Item style={{marginLeft:"-5%"}}></Menu.Item>
                 <Menu.Item position = "center" >
-                    <div >
+                    <div>
                         <Button.Group>
                             <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
                             <Button.Or />
@@ -129,7 +102,6 @@ const HomePage= () => {
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
-
             {renderForm()}
         </div>
     )

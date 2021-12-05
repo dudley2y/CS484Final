@@ -100,6 +100,7 @@ app.post('/register', (req,res) =>{
                 // `INSERT INTO userLogin(name, username, password) VALUES(?,?,?)`, [name, username, hash]
                 // const sqlQuery = `INSERT INTO userLogin(name, username, password) VALUES("${name}", "${username}", "${hash}");`
                 db.run(`INSERT INTO userLogin(name, username, password) VALUES(?,?,?)`, [name, username, hash])
+                db.run(`INSERT INTO youtubeUserInfo(username) VALUES(?)`, [username])
 
                 const user = { "username": username, "password":hash, "name": name}
 
@@ -302,23 +303,33 @@ cron.schedule("*/60 * * * *", () => {
 
 // Search Section
 
-app.post('/youtube_api_search', (req,res) => {
-    const YOUTUBE_API_KEY = 'AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM'
-    const search_string = req.body.yt_search
+app.get("/youtube_playlist_search", (req, res) => {
 
-    console.log("user searched for: ", search_string)
-    // axios.get({
-    //             url: 'https://www.googleapis.com/youtube/v3/',
-    //             method: "Get",
-    //             params: {
-    //                 part: 'snippet',
-    //                 maxResults: 5,
-    //                 key: YOUTUBE_API_KEY
-    //             }
-    //         }).then( res => {
-    //             setReponse(res.data)
-    //         })
-    // res.send("sucess")
+    // db.get(`SELECT username FROM youtubeUserInfo WHERE username="floop";`, (err, row) => {
+    //     if(row){
+    //         // var song_list;
+    //         // var artist_list
+    //         // db.get(`SELECT * FROM youtubeSongs WHERE playlist_id="?"`, [row.playlist_id], (err, row) => {
+    //         //     if(err){
+    //         //         res.send(err);
+    //         //     }
+    //         //     else{
+    //         //         song_list = row.song_name;
+    //         //         artist_list = row.artist_name;
+    //         //     }
+    //         // });
+    //         // res.send(row.username)
+    //     }
+    //     else{
+    //         console.log(err)
+    //         if(err){
+    //             res.send(err)
+    //         }
+    //         else{
+    //             res.send("Error")
+    //         }
+    //     }
+    // })
 })
 
 app.listen(5000, () => {
