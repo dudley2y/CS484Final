@@ -27,7 +27,7 @@ const YoutubeSearch = () => {
 // ?key={your_key_here}&channelId={channel_id_here}&part=snippet,id&order=date&maxResults=20
     const WATCH_URL = "https://www.youtube.com/watch?v=";
         // old api key = AIzaSyDKmSJpeUk029A3eJfRD-tgefJ9D4XFF7I
-    const YOUTUBE_API_KEY = "AIzaSyDr3JoWwk7_YCxEDT-rANzq4Nco45PCb9g";
+    const YOUTUBE_API_KEY = "AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM";
     const default_video_details_url  = "https://www.googleapis.com/youtube/v3/videos?"
     const default_search_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + YOUTUBE_API_KEY + "&";
     const default_channel_url = "https://www.googleapis.com/youtube/v3/search?key=" + YOUTUBE_API_KEY + "&part=snippet,id&order=date&maxResults=1&channelId="
