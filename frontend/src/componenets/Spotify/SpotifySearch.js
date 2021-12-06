@@ -6,6 +6,7 @@ import SpotifyPlaylist from './SpotifyPlaylist'
 import SpotifyPlayer from 'react-spotify-web-playback';
 import CommonArtist from './CommonArtist';
 import "../Styles/styles.css"
+import SpotifyPlaylists from './SpotifyPlaylists';
 const querystring = require('querystring');
 
 const SpotifySearch = () => {
@@ -160,8 +161,8 @@ const SpotifySearch = () => {
             setPlaylistSelected(false)
         }
         else{
-            setRecentArtistSelected(true)
-            setPlaylistSelected(false)
+            setRecentArtistSelected(false)
+            setPlaylistSelected(true)
         }
     }
     const displayChart = () =>{
@@ -171,9 +172,11 @@ const SpotifySearch = () => {
                     <CommonArtist artists = {topArtists}/> 
                 )
             }
-            return (
-                <SpotifyPlaylist/>
-            )
+            else{
+                return(
+                    <SpotifyPlaylists playlists = {playlists}/>
+                )
+            }
         }
     }
     return(
